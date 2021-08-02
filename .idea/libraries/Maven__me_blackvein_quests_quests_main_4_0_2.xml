@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: me.blackvein.quests:quests-main:4.0.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/me/blackvein/quests/quests-main/4.0.2/quests-main-4.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/me/blackvein/quests/quests-main/4.0.2/quests-main-4.0.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/me/blackvein/quests/quests-main/4.0.2/quests-main-4.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
