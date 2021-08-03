@@ -1,5 +1,4 @@
 package net.supremesurvival.supremecore.voteUtils.weather;
-import javafx.util.Pair;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
