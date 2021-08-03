@@ -4,7 +4,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.supremesurvival.supremecore.SupremeCore;
-import net.supremesurvival.supremecore.commsUtils.TitleUtility;
+import net.supremesurvival.supremecore.commonUtils.TitleUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.boss.BarColor;
