@@ -1,6 +1,7 @@
 package net.supremesurvival.supremecore.voteUtils.time;
 
 import net.supremesurvival.supremecore.SupremeCore;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Instant;
@@ -17,6 +18,7 @@ public class VoteTime {
     public Instant lastVote;
     public VoteUtil voteUtil;
     public List<String> args = new ArrayList<String>();
+    public World voteWorld;
 
     public void enable(){
         args.add("yes");args.add("no");
@@ -24,8 +26,8 @@ public class VoteTime {
     public void disable(){
         noVote.clear();
         yesVote.clear();
-    }
 
+    }
     public List<String> getArgs(){
         return args;
     }

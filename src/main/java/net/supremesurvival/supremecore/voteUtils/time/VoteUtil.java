@@ -5,6 +5,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.supremesurvival.supremecore.SupremeCore;
+import net.supremesurvival.supremecore.commonUtils.TitleUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.boss.BarColor;
@@ -21,6 +22,8 @@ public class VoteUtil {
     private BossBar bossBar;
     private VoteTime voteTime;
     private SupremeCore plugin;
+    TitleUtility titleUtil = new TitleUtility();
+
     public VoteUtil(SupremeCore plugin, VoteTime voteTime) {
         this.plugin = plugin;
         this.voteTime = voteTime;
@@ -44,7 +47,9 @@ public class VoteUtil {
         TextComponent no = new TextComponent("No");
         no.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/tv no"));
         no.setColor(ChatColor.RED);
-
+        //will refactor this to use the titleutility rather than the getServer Broadcast
+        //broadcast will also send to players in other worlds which is unwanted behaviour.
+        //actually broadcast can still be used, we will likely just have to implement a temp permissable to only send the broadcast to players in voteworld.
         plugin.getServer().broadcastMessage(ChatColor.YELLOW + "[TV] " + ChatColor.GOLD + player.getName() + ChatColor.GRAY + " has started a time vote. " +
                 "You have " + ChatColor.GOLD + voteTime.timeToVote + ChatColor.GRAY + " seconds to vote. " +
                 "You may click yes/no OR type /timevote <yes/no> OR sleep in bed to vote yes. ");
@@ -52,6 +57,7 @@ public class VoteUtil {
 
         voteTime.getYesVote().add(player.getUniqueId());
 
+        titleUtil.sendPlayer("&bVote &eStarted","You started a time vote",0,100,0, player);
         player.sendMessage(ChatColor.YELLOW + "[TV] " + ChatColor.GRAY + "You automatically cast a Yes vote by starting the vote.");
 
         createBossBar();

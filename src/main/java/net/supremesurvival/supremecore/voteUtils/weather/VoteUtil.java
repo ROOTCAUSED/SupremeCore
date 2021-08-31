@@ -96,7 +96,7 @@ public class VoteUtil {
                 voteWeather.getNoVote().clear();
                 timer.cancel();
                 bossBar.removeAll();
-                titleUtility.sendTitleAll(ChatColor.AQUA + "WeatherVoteWeatherVoteWeatherVoteWeatherVoteWeatherVoteWeatherVoteWeatherVoteWeatherVoteWeatherVoteWeatherVoteWeatherVoteWeatherVoteWeatherVoteWeatherVoteWeatherVote","Weather Changed", 1, 60,1);
+                titleUtility.sendTitleAll(ChatColor.AQUA + "WeatherVote","Weather Changed", 1, 60,1);
 
             }, voteWeather.timeToVote * 20);
         } else {

@@ -4,6 +4,7 @@ main: net.supremesurvival.supremecore.SupremeCore
 api-version: 1.16
 authors: [ xMachiavellix ]
 description: Core API for SupremeNetwork
+softdepend: [PlaceholderAPI] # This is used, if your plugin works without PlaceholderAPI.
 commands:
   HorseInfo:
     description: Your description

@@ -3,9 +3,9 @@
 package net.supremesurvival.supremecore.commonUtils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-
 public class TitleUtility {
     public String title;
     public String subTitle;
@@ -15,17 +15,17 @@ public class TitleUtility {
     //Displays a title to all players on current server
     public void sendTitleAll(String title, String subtitle, int fadeIn, int stay, int fadeOut) {
         Bukkit.getOnlinePlayers().forEach(player -> {
-            player.sendTitle(title, subtitle, fadeIn, stay, fadeOut);
+            player.sendTitle(ChatColor.translateAlternateColorCodes('&', title), ChatColor.translateAlternateColorCodes('&',subtitle), fadeIn, stay, fadeOut);
         });
     }
     //Displays a title to all players on a given world of the current server
     public void sendToWorld(String title, String subtitle, int fadeIn, int stay, int fadeOut, World world){
         world.getPlayers().forEach(player -> {
-            player.sendTitle(title, subtitle,fadeIn,stay,fadeOut);
+            player.sendTitle(ChatColor.translateAlternateColorCodes('&', title), ChatColor.translateAlternateColorCodes('&',subtitle), fadeIn, stay, fadeOut);
         });
     }
     //Displays a title to a specified player on the current server.
     public void sendPlayer(String title, String subtitle, int fadeIn, int stay, int fadeOut, Player player){
-        player.sendTitle(title, subtitle,fadeIn,stay,fadeOut);
+        player.sendTitle(ChatColor.translateAlternateColorCodes('&', title), ChatColor.translateAlternateColorCodes('&',subtitle), fadeIn, stay, fadeOut);
     }
     }

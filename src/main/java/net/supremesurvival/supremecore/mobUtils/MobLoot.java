@@ -1,5 +1,6 @@
 package net.supremesurvival.supremecore.mobUtils;
 
+import net.supremesurvival.supremecore.commonUtils.TitleUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
@@ -41,6 +42,10 @@ public List <ItemStack> drop;
                 Bukkit.getConsoleSender().sendMessage(loot.toString());
             }
             }
+        if(event.getEntity().getKiller() instanceof Player){
+            Player player = event.getEntity().getKiller();
+
+        }
         Bukkit.getConsoleSender().sendMessage("nerfed loot");
         return true;
     }
