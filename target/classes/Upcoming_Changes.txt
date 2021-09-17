@@ -1,0 +1,15 @@
+VoteWeather|voteTime refactors. This should allow a new vote object to be created om command
+exectuition rather than on startup. This will allow multiple simultaneous votes to be held across different worlds of the same server.
+
+To do -
+    Change constructor on TV/WV objects to accept parameters including world.
+    - https://github.com/fof1092/WeatherVote/blob/master/src/me/F_o_F_1092/WeatherVote/WeatherVote.java does this quite well.
+
+TitleSender - Will need to rework the custom title library for SS. Experiment with various styling differences. Would be nice to get a nice gradient going.
+
+MYSQLConnector - Ensure compatibility with mariadb (shouldnt be an issue, but have had other plugins not work with MDB)
+
+GoldLimiter - Look into tying into EssxAPI in order to listen for the sell event and intercept, cancelling the event
+if the user has already met their daily quota. This will likely need a database table GoldTxns24hr or similar.
+
+

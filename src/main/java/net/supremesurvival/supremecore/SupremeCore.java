@@ -1,8 +1,11 @@
 package net.supremesurvival.supremecore;
 
+import com.palmergames.bukkit.towny.TownyUniverse;
 import net.supremesurvival.supremecore.commandUtils.SupremeTabs;
 import net.supremesurvival.supremecore.commonUtils.BossBarUtility;
 import net.supremesurvival.supremecore.commonUtils.ChatUtil;
+import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
+import net.supremesurvival.supremecore.commonUtils.intervalAnnouncer.IntervalAnnouncer;
 import net.supremesurvival.supremecore.mobUtils.HorseInfo;
 import net.supremesurvival.supremecore.voteUtils.time.TimeVoteCommand;
 import net.supremesurvival.supremecore.voteUtils.time.VoteEvent;
@@ -30,23 +33,16 @@ public final class SupremeCore extends JavaPlugin implements Listener {
     public List announcements;
     public ChatUtil chatUtil = new ChatUtil(this);
     public boolean placeholderAPI;
+    public boolean townyAdvanced;
+    ConfigUtility configUtility = new ConfigUtility(this);
+    IntervalAnnouncer intervalAnnouncer = new IntervalAnnouncer(this);
     @Override
     public void onEnable() {
         // Plugin startup logic
-        this.getServer().getPluginManager().registerEvents(this,this);
         super.onEnable();
-        this.getConfig().options().copyDefaults(true);
-        this.saveConfig();
-        placeholderAPI = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
-        if(placeholderAPI){
-            Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[SupremeCore] [+] " + ChatColor.GRAY + "PAPI hooked.");
-        }
-        announcements = this.getConfig().getStringList("announcements");
-        barManager.createBar();
-        if(Bukkit.getOnlinePlayers().size() > 0)
-            for (Player on : Bukkit.getOnlinePlayers())
-                barManager.addPlayer(on);
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[SupremeCore] [+] " + ChatColor.GRAY + "Config file loaded.");
+        configUtility.initCfg();
+        this.initHooks();
+        this.initUtils();
         voteTime.enable();
         this.getCommand("TimeVote").setExecutor(new TimeVoteCommand(this, voteTime));
         this.getServer().getPluginManager().registerEvents(new VoteEvent(voteTime), this);
@@ -75,9 +71,24 @@ public final class SupremeCore extends JavaPlugin implements Listener {
         barManager.disable();
     }
     @EventHandler
-    public void onJoin( PlayerJoinEvent event){
-        if (!barManager.getBar().getPlayers().contains(event.getPlayer()))
-            barManager.addPlayer(event.getPlayer());
+    public void onJoin(PlayerJoinEvent event){
+
     }
+    public void initHooks(){
+        placeholderAPI = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
+        if(placeholderAPI){
+            Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[SupremeCore] [+] " + ChatColor.GRAY + "PAPI hooked.");
+        }
+        townyAdvanced = Bukkit.getPluginManager().isPluginEnabled("Towny");
+        if(townyAdvanced){
+            Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[SupremeCore] [+] " + ChatColor.GRAY + "Towny hooked.");
+        }
+    }
+    public void initUtils(){
+        this.getServer().getPluginManager().registerEvents(this,this);
+        intervalAnnouncer.enable();
+
+    }
+
 
 }

@@ -17,7 +17,7 @@ public class VoteEvent implements Listener {
     @EventHandler
     public void sleepVote(PlayerBedEnterEvent event){
         Player player = event.getPlayer();
-        World world =player.getWorld();
+        World world = player.getWorld();
 
         if(world.hasStorm()){
             world.setStorm(false);
@@ -26,13 +26,13 @@ public class VoteEvent implements Listener {
             return;
         }
 
-        if(!voteTime.isVoteActive){
+        if(!voteTime.getActiveVote(world)){
             if(!voteTime.voteUtil.isOverworld(player)) return;
 
             voteTime.voteUtil.startVote(player);
         }else{
-            if(!voteTime.getYesVote().contains(player.getUniqueId())){
-                voteTime.getYesVote().add(player.getUniqueId());
+            if(!voteTime.getYesVotes(world).contains(player.getUniqueId())){
+                voteTime.getYesVotes(world).add(player.getUniqueId());
                 player.sendMessage(ChatColor.YELLOW + "[TV] " + ChatColor.GRAY + "Because you chose to sleep you are starting a time vote.");
             }
         }

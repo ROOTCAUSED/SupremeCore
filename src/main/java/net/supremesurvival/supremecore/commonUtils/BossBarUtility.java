@@ -38,7 +38,6 @@ public class BossBarUtility {
 
     public void cast(){
         taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-
             int count = 0;
             double progress = 1.0;
             double time = 1.0/(20);
