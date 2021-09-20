@@ -8,7 +8,6 @@ public class ActionManager {
     public void sendMessage(Player player, String msg){
         msg = chatcc(msg);
         player.sendActionBar(msg);
-        Bukkit.getServer().getConsoleSender().sendMessage(msg);
     }
     public String chatcc(String msg){
         return(ChatColor.translateAlternateColorCodes('&',msg));

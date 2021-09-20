@@ -1,8 +1,6 @@
 package net.supremesurvival.supremecore.voteUtils.weather;
 import org.bukkit.World;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 

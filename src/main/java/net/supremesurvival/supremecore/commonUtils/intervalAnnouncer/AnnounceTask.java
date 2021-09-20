@@ -21,7 +21,6 @@ public class AnnounceTask implements Runnable {
             Player p = (Player)var3.next();
             try {
                 (new PlayerMsgTask(p, this.msg, l)).runTaskTimer(this.announcer.plugin, 1L, 10L);
-                Bukkit.getConsoleSender().sendMessage(p.toString());
             } catch (IllegalStateException | IllegalArgumentException var5) {
                 var5.printStackTrace();
             }

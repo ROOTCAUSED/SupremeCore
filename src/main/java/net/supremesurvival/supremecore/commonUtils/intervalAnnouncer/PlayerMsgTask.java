@@ -46,7 +46,6 @@ public class PlayerMsgTask extends BukkitRunnable {
             }
 
             if (this.s > 0) {
-                Bukkit.getConsoleSender().sendMessage(p + msg);
                 IntervalAnnouncer.sendAnnouncement(this.p, this.msg);
                 --this.s;
             } else {

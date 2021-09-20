@@ -61,7 +61,6 @@ public class IntervalAnnouncer implements Listener {
         joinMessage = this.plugin.getConfig().getString("join_announcement");
         disableSounds = this.plugin.getConfig().getBoolean("disable_sounds");
         announcementLength = this.plugin.getConfig().getInt("announcement_length");
-        Bukkit.getConsoleSender().sendMessage(String.valueOf(announcementLength));
     }
 
     protected void startAnnouncements() {

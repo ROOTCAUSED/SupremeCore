@@ -16,7 +16,6 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.UUID;
 
 public class VoteUtil {
     private BukkitTask timer;
@@ -34,13 +33,13 @@ public class VoteUtil {
     public void startVote(Player player){
         World world = player.getWorld();
         if(!isOverworld(player)) return;
-        double timeElapsed = 0;
-            if(voteTime.getLastVote(world) != null) timeElapsed = Duration.between(voteTime.getLastVote(world), Instant.now()).toMinutes();
-                if(voteTime.getLastVote(world) == null || timeElapsed >= voteTime.voteDelay){
-                    voteTime.setActiveVote(world, true);
-                    if(voteTime.getLastVote(world) == null){
-                        voteTime.setLastVote(world, Instant.now());
-                    }
+    double timeElapsed = 0;
+    if(voteTime.lastVote != null) timeElapsed = Duration.between(voteTime.lastVote, Instant.now()).toMinutes();
+    if(voteTime.lastVote == null || timeElapsed >= voteTime.voteDelay){
+        voteTime.isVoteActive = true;
+        if(voteTime.lastVote == null){
+            voteTime.lastVote = Instant.now();
+        }
         TextComponent yes = new TextComponent("Yes");
         yes.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/tv yes"));
         yes.setColor(ChatColor.GREEN);
@@ -56,7 +55,7 @@ public class VoteUtil {
                 "You may click yes/no OR type /timevote <yes/no> OR sleep in bed to vote yes. ");
         plugin.getServer().broadcast(new ComponentBuilder().append(yes).append(" / ").color(ChatColor.GRAY).append(no).create());
 
-        voteTime.getYesVotes(world).add(player.getUniqueId());
+        voteTime.getYesVote().add(player.getUniqueId());
 
         titleUtil.sendPlayer("&bVote &eStarted","You started a time vote",0,100,0, player);
         player.sendMessage(ChatColor.YELLOW + "[TV] " + ChatColor.GRAY + "You automatically cast a Yes vote by starting the vote.");
@@ -64,7 +63,7 @@ public class VoteUtil {
         createBossBar();
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            if(voteTime.getYesVotes(world).size() > voteTime.getNoVotes(world).size()){
+            if(voteTime.getYesVote().size() > voteTime.getNoVote().size()){
                 if(world.getTime()>=12600){
                     world.setTime(0);
                     plugin.getServer().broadcastMessage(ChatColor.GREEN + "[TV] " + ChatColor.GREEN + "Vote Success: "
@@ -79,9 +78,9 @@ public class VoteUtil {
                         + ChatColor.GRAY + "Server time will elapse naturally.");
             }
 
-            voteTime.setActiveVote(world, false);
-            voteTime.getYesVotes(world).clear();
-            voteTime.getNoVotes(world).clear();
+            voteTime.isVoteActive = false;
+            voteTime.getYesVote().clear();
+            voteTime.getNoVote().clear();
             timer.cancel();
             bossBar.removeAll();
 

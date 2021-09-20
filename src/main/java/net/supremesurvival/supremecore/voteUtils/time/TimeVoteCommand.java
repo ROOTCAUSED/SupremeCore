@@ -24,8 +24,8 @@ public class TimeVoteCommand implements CommandExecutor {
             if(!voteTime.voteUtil.isOverworld(player)) return true;
 
             if (args.length == 1) {
-                if(voteTime.getActiveVote(world)){
-                    if(voteTime.getYesVotes(world).contains(player.getUniqueId()) || voteTime.getNoVotes(world).contains(player.getUniqueId())){
+                if(voteTime.isVoteActive){
+                    if(voteTime.getYesVote().contains(player.getUniqueId()) || voteTime.getNoVote().contains(player.getUniqueId())){
                         player.sendMessage(ChatColor.RED + "[TV] " + ChatColor.GRAY + "You have already voted");
                         return true;
                     }
@@ -33,11 +33,11 @@ public class TimeVoteCommand implements CommandExecutor {
                     if(args[0].equalsIgnoreCase("yes")){
                         player.sendMessage(ChatColor.GREEN + "[TV] " + ChatColor.GRAY + "You have voted Yes");
                         plugin.getServer().broadcastMessage(ChatColor.GREEN + "[TV] " + player.getName() + ChatColor.GRAY + " voted " + ChatColor.GREEN + "Yes");
-                        voteTime.getYesVotes(world).add(player.getUniqueId());
+                        voteTime.getYesVote().add(player.getUniqueId());
                     }else if(args[0].equalsIgnoreCase("no")){
                         player.sendMessage(ChatColor.RED + "[TV] " + ChatColor.GRAY + "You have voted No");
                         plugin.getServer().broadcastMessage(ChatColor.RED + "[TV] " + player.getName() + ChatColor.GRAY + " voted " + ChatColor.RED + "No");
-                        voteTime.getNoVotes(world).add(player.getUniqueId());
+                        voteTime.getNoVote().add(player.getUniqueId());
                     }else{
                         player.sendMessage(ChatColor.RED + "[TV] " + ChatColor.GRAY + "Invalid use: /timevote <yes/no>");
                     }
@@ -45,7 +45,7 @@ public class TimeVoteCommand implements CommandExecutor {
                     player.sendMessage(ChatColor.RED + "[TV] " + ChatColor.GRAY + "There is no active vote.");
                 }
             }else if(args.length == 0){
-                if(!voteTime.getActiveVote(world)){
+                if(!voteTime.isVoteActive){
                     voteTime.voteUtil.startVote(player);
                 }
             }
