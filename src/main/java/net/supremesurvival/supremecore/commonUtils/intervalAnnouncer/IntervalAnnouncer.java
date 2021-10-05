@@ -2,7 +2,9 @@ package net.supremesurvival.supremecore.commonUtils.intervalAnnouncer;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.supremesurvival.supremecore.SupremeCore;
+import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitTask;
@@ -29,18 +31,20 @@ public class IntervalAnnouncer implements Listener {
     private static ActionManager actionManager;
     protected static boolean placeholderAPI;
     SupremeCore plugin;
+    private static FileConfiguration cfg;
 
     public IntervalAnnouncer(SupremeCore plugin){
         this.plugin = plugin;
     }
     public void enable(){
+            cfg = ConfigUtility.getModuleConfig("Announcer");
             actionManager = new ActionManager();
-            announcements = plugin.announcements;
             placeholderAPI = plugin.placeholderAPI;
             sending = new HashMap();
+            ///Minechat is an android ios app that allows users to chat by logging into the game, they do not have a display and cant be served action bar announcements. Can look into a playermsg alternative, but is it worth it? nah.
             minechat = new ArrayList();
             this.loadSettings();
-            this.plugin.getCommand("actionannouncer").setExecutor(this.commands);
+            this.plugin.getCommand("Announcer").setExecutor(this.commands);
             this.plugin.getServer().getPluginManager().registerEvents(this,this.plugin);
             if(this.plugin.getConfig().getBoolean("announcer_enabled")){
                 this.startAnnouncements();
@@ -54,13 +58,14 @@ public class IntervalAnnouncer implements Listener {
         }
     }
     private void loadSettings() {
-        random = this.plugin.getConfig().getBoolean("announcer_random");
-        announcements = this.plugin.getConfig().getStringList("announcements");
-        announceInterval = this.plugin.getConfig().getInt("announce_interval");
-        announceOnJoin = this.plugin.getConfig().getBoolean("announce_on_join");
-        joinMessage = this.plugin.getConfig().getString("join_announcement");
-        disableSounds = this.plugin.getConfig().getBoolean("disable_sounds");
-        announcementLength = this.plugin.getConfig().getInt("announcement_length");
+
+        random = cfg.getBoolean("announcer_random");
+        announcements = cfg.getStringList("announcements");
+        announceInterval = cfg.getInt("announce_interval");
+        announceOnJoin = cfg.getBoolean("announce_on_join");
+        joinMessage = cfg.getString("join_announcement");
+        disableSounds = cfg.getBoolean("disable_sounds");
+        announcementLength = cfg.getInt("announcement_length");
     }
 
     protected void startAnnouncements() {

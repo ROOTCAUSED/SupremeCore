@@ -4,13 +4,18 @@ main: net.supremesurvival.supremecore.SupremeCore
 api-version: 1.16
 authors: [ xMachiavellix ]
 description: Core API for SupremeNetwork
-softdepend: [PlaceholderAPI] # This is used, if your plugin works without PlaceholderAPI.
+softdepend: [PlaceholderAPI]
+depend: [WorldGuard]
+permissions:
+  announcer.send:
+    description: send an announcement to all players.
+    default: op
 commands:
   HorseInfo:
     description: Your description
     usage: /horseinfo
-  timevote:
-    aliases: [tv]
-  weathervote:
-    aliases: [wv]
-  actionannouncer:
+  Announcer:
+    description: Command interface for the interval announcer class and related functionality.
+    aliases: [aa]
+  Tomes:
+    description: manages custom tomes

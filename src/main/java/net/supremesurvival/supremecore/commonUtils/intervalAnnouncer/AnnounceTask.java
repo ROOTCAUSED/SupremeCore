@@ -1,6 +1,8 @@
 package net.supremesurvival.supremecore.commonUtils.intervalAnnouncer;
 
 import java.util.Iterator;
+
+import net.supremesurvival.supremecore.commonUtils.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -21,8 +23,8 @@ public class AnnounceTask implements Runnable {
             Player p = (Player)var3.next();
             try {
                 (new PlayerMsgTask(p, this.msg, l)).runTaskTimer(this.announcer.plugin, 1L, 10L);
-            } catch (IllegalStateException | IllegalArgumentException var5) {
-                var5.printStackTrace();
+            } catch (IllegalStateException | IllegalArgumentException exception) {
+                Logger.sendMessage(exception.toString(), Logger.LogType.ERR, "Announcer");
             }
         }
 

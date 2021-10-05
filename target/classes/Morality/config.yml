@@ -1,0 +1,10 @@
+moralitybounds:
+  Neutral:
+    low-Bound: -49
+    upper-Bound: 49
+  Evil:
+    upper-Bound: -50
+    low-Bound: -100
+  Good:
+    low-Bound: 50
+    upper-Bound: 100

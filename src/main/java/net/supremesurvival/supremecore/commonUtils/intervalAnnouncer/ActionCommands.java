@@ -49,12 +49,12 @@ public class ActionCommands implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("reload")) {
                 this.announcer.rello();
                 this.sms(s, "&8&m-----------------------------------------------------");
-                this.sms(s, "&b&lAction&f&lAnnouncer &bconfiguration reloaded!");
+                this.sms(s, "&b&lAnnouncer &bconfiguration reloaded!");
                 this.sms(s, "&8&m-----------------------------------------------------");
                 return true;
             } else if (args[0].equalsIgnoreCase("help")) {
                 this.sms(s, "&8&m-----------------------------------------------------");
-                this.sms(s, "&c&lA&cction&7&lA&7nnouncer &fHelp");
+                this.sms(s, "&bAnnouncer &fHelp");
                 this.sms(s, "&c/aa send <player> <display time> <message/index>");
                 this.sms(s, "&fSend an ActionBar message to a player");
                 this.sms(s, "&c/aa announce <display length> <message/index>");

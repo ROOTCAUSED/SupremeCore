@@ -1,0 +1,27 @@
+announcer_enabled: true
+announcer_random: false
+announce_interval: 30
+announcement_length: 8
+announcements:
+  - '&bRefer your friends to the server with &a&l/ref <playername>&r&b!'
+  - '&bThere are currently &a%online% &bplayers online in Towny!'
+  - '&bSupreme Survival is currently in &aBETA!'
+  - '&bTeleport to the wilderness with &a/wild'
+  - '&bUse &a/sell&b to sell Gold to the server!'
+  - '&bWhen you die your items get placed in a chest at that location!'
+  - '&bComplete our custom &aQuests&b to earn great rewards!'
+  - '&bCreate your own town for &a$50,000!'
+  - '&bThere are currently &a%online% &bplayers online!'
+  - '&bUse &a/mine&b to teleport to the mining world &a(Resets every month!)'
+  - '&bType &a/leaderboards&b to view top players on the server!'
+  - '&bUse &a/discord&b for our discord link!'
+  - '&bThis server supports crossplay! &a[Xbox, PS4 & Switch & Mobile]'
+  - '&bHave a problem? &a/ticket&b to submit a ticket to our staff!'
+  - '&bThere are currently &a%online% &bplayers online!'
+  - '&bVote for the server to receive &a$50&b and &a 1 Gold &bper vote!'
+  - '&bRankup to &eMerchant&b to rent a stall at &a/shop.'
+  - '&bRankup to &6Earl&b to create your own town.'
+  - '&bUnlock more auction slots by ranking up through the &eMerchant&b class'
+announce_on_join: true
+join_announcement: '&e&lWelcome to the server &b%player%!'
+disable_sounds: false

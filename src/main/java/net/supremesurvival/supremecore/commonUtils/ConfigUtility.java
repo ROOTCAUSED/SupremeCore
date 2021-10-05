@@ -1,32 +1,72 @@
 package net.supremesurvival.supremecore.commonUtils;
 
+import com.mysql.cj.log.Log;
 import net.supremesurvival.supremecore.SupremeCore;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
+import java.awt.image.ImagingOpException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class ConfigUtility {
-    SupremeCore plugin;
-
+    static SupremeCore plugin;
+    static String module;
+    static ArrayList<String> moduleList = new ArrayList();
     public ConfigUtility(SupremeCore plugin){
-        this.plugin = plugin;
+        ConfigUtility.plugin = plugin;
     }
 
     private void loadCfg(){
-        FileConfiguration config = this.plugin.getConfig();
-        config.options().header("SupremeCore v" + this.plugin.getDescription().getVersion()+" Main configuration");
+        FileConfiguration config = ConfigUtility.plugin.getConfig();
+        config.options().header("SupremeCore v" + ConfigUtility.plugin.getDescription().getVersion()+" Main configuration");
     }
     public void initCfg(){
-        this.plugin.getConfig().options().copyDefaults(true);
-        this.plugin.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "[SupremeCore] [+] " + ChatColor.GRAY + "Config file loaded.");
-        this.plugin.saveConfig();
-        plugin.announcements = this.plugin.getConfig().getStringList("announcements");
-        this.plugin.getServer().getConsoleSender().sendMessage("Announcements loaded");
+        ConfigUtility.plugin.getConfig().options().copyDefaults(true);
+        ConfigUtility.plugin.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "[SupremeCore] [+] " + ChatColor.GRAY + "Config file loaded.");
+        ConfigUtility.plugin.saveConfig();
     }
-    public boolean isFile(String name, String directory)
+
+    public static void initModuleCfg(String module){
+        ConfigUtility.module = module;
+        File fileConfig = new File("plugins/SupremeCore/" + module + "/config.yml");
+        FileConfiguration ymlConfigFile = YamlConfiguration.loadConfiguration(fileConfig);
+        try{
+            if(!fileConfig.exists()){
+                //retrieve resource file from jar for provided module path = /resources/MODULENAME/config.yml
+                InputStream inputStream = plugin.getResource(module +"/config.yml");
+                ymlConfigFile = YamlConfiguration.loadConfiguration(new InputStreamReader(inputStream));
+                //save resourcefile to fileConfig created above
+                ymlConfigFile.save(fileConfig);
+                Logger.sendMessage("Created Config file for " + module, Logger.LogType.INFO, module);
+            }
+        }catch (IOException exception) {
+            Bukkit.getConsoleSender().sendMessage("Cannot Create Config.yml for " + module);
+        }
+        moduleList.add(module);
+    }
+
+
+    public static FileConfiguration getModuleConfig(String module){
+        if(ConfigUtility.isFile(module)){
+            File fileConfig = new File("plugins/SupremeCore/" + module + "/config.yml");
+            Logger.sendMessage("Retrieved config file for " + module, Logger.LogType.INFO, "ConfigUtil");
+            return YamlConfiguration.loadConfiguration(fileConfig);
+        }else{
+            initModuleCfg(module);
+        }
+        File fileConfig = new File("plugins/SupremeCore/" + module + "/config.yml");
+        FileConfiguration ymlConfigFile = YamlConfiguration.loadConfiguration(fileConfig);
+        Logger.sendMessage("Retrieved config file for " + module, Logger.LogType.INFO, "ConfigUtil");
+        return ymlConfigFile;
+    }
+
+    public static boolean isFile(String module)
     {
-        File f = new File(directory, name);
+        File f = new File("plugins/SupremeCore/" + module + "/config.yml");
         return f.exists();
     }
 }

@@ -4,7 +4,7 @@ import java.util.Iterator;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-
+//Exposes the Bukkit action bar api for use within our plugin.
 public class ActionAPI {
     public ActionAPI() {
     }
@@ -28,8 +28,8 @@ public class ActionAPI {
     public static void sendTimedPlayerAnnouncement(Plugin plugin, Player p, String msg, int seconds) {
         try {
             (new PlayerMsgTask(p, msg, seconds)).runTaskTimer(plugin, 1L, 10L);
-        } catch (IllegalStateException | IllegalArgumentException var5) {
-            var5.printStackTrace();
+        } catch (IllegalStateException | IllegalArgumentException exception) {
+            exception.printStackTrace();
         }
 
     }
