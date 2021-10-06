@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+//This class will allow us to add lore tomes to the server. Lore tomes will be ingame Written_Books (by default can only
+//be written by a player and have limited use) which are filled from a config.yml file.
+//We can use this feature to add rich ingame lore via a library of books being added to the loot tables of the game.
 public class Tome {
     ItemStack tome = new ItemStack(Material.WRITTEN_BOOK);
     BookMeta tomeMeta = (BookMeta)tome.getItemMeta();
@@ -49,8 +52,14 @@ public class Tome {
 
         return page;
     }
+    //compiles a longer string into short 250 character strings, and then further splits the end of that string to ensure that
+    //pages do not carry over (as that looks crap). New line characters mess up automatic formatting of book pages
+    //Book pages can store roughly 250 characters, but new lines will throw that count off. May attempt to counter this
+    //by checking for nl and for each found in a given page reducing the character count of that page by ~29-30. For now, removing all
+    //new lines is an acceptable middleground.
     public List<String> compilePages(String message){
         Logger.sendMessage(message, Logger.LogType.INFO, "Tomes");
+        message = replaceNewLines(message);
         List<String> pages = new ArrayList<>();
         if(message.length() < 250){
             pages.add(message);
@@ -69,8 +78,10 @@ public class Tome {
 
         return pages;
     }
-    public void replaceNewLines(String message){
-
+    //hacky fix but it works. Will revisit this
+    public String replaceNewLines(String message){
+        String tmpString = message.replace("\n", "");
+        return tmpString;
     }
     //Used to add all preprocessed pages to book entity
     public void addPages(List<String> pages){

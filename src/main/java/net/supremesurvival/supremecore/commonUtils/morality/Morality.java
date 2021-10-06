@@ -3,6 +3,7 @@ package net.supremesurvival.supremecore.commonUtils.morality;
 import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
 import net.supremesurvival.supremecore.commonUtils.Logger;
 import net.supremesurvival.supremecore.commonUtils.morality.player.MoralPlayer;
+import net.supremesurvival.supremecore.commonUtils.placeholder.SupremePlaceholder;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
@@ -22,6 +23,7 @@ public class Morality implements Listener {
     private static HashMap<UUID, MoralPlayer> moralManagerList;
 
     public static void enable(){
+        SupremePlaceholder.register("Morality");
         moralityConfig = ConfigUtility.getModuleConfig("Morality");
         moralManagerList = new HashMap<UUID, MoralPlayer>();
         if (!(Bukkit.getServer().getOnlinePlayers().size()==0)){
@@ -105,5 +107,10 @@ public class Morality implements Listener {
             player.updateMoralStanding(MoralPlayer.MoralStanding.EVIL);
         }
     }
-
+    public static String getMoralStanding(Player player){
+        return moralManagerList.get(player.getUniqueId()).getStanding().toString();
+    }
+    public static int getMorality(Player player){
+        return moralManagerList.get(player.getUniqueId()).getMorality();
+    }
 }

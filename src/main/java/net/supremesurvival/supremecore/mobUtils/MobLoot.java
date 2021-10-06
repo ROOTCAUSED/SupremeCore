@@ -1,9 +1,7 @@
 package net.supremesurvival.supremecore.mobUtils;
 
-import net.supremesurvival.supremecore.commonUtils.TitleUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,10 +18,9 @@ import java.util.List;
 public class MobLoot implements Listener {
 public ItemStack item;
 public Material loot;
-public List <ItemStack> drop;
-
     @EventHandler
     public boolean mobDeath(EntityDeathEvent event){
+        //this checks all mob deaths (not just those killed by players) by design, this is to prevent natural death mob farms.
         LivingEntity entity = event.getEntity();
         if (entity instanceof PigZombie) {
             checkLoot(event);
@@ -39,14 +36,12 @@ public List <ItemStack> drop;
             loot = item.getType();
             if(loot.equals(Material.GOLD_INGOT) || loot.equals(Material.GOLD_NUGGET) || loot.equals(Material.GOLDEN_SWORD)){
                 iter.remove();
-                Bukkit.getConsoleSender().sendMessage(loot.toString());
             }
             }
         if(event.getEntity().getKiller() instanceof Player){
             Player player = event.getEntity().getKiller();
 
         }
-        Bukkit.getConsoleSender().sendMessage("nerfed loot");
         return true;
     }
 }

@@ -1,4 +1,5 @@
 package net.supremesurvival.supremecore.mobUtils;
+import net.supremesurvival.supremecore.commonUtils.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -7,7 +8,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import java.text.DecimalFormat;
-
+//This is a crude class to return horse info to a player who runs the command from horseback.
+//At some point this will be expanded with features reverse engineered from the RPGHorses library, however for now it serves its purpose.
 public class HorseInfo implements CommandExecutor {
     private LivingEntity PlayerMount;
     private AbstractHorse PlayerHorse;
@@ -45,7 +47,7 @@ public class HorseInfo implements CommandExecutor {
                 return true;
             }
         }
-        Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[SupremeCore] Horseinfo can only be run by a player on horseback.");
+        Logger.sendMessage("Horseinfo can only be run by a player on horseback.", Logger.LogType.INFO, "HorseInfo");
         return true;
     }
 }

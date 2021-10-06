@@ -2,6 +2,7 @@ net/supremesurvival/supremecore/commonUtils/intervalAnnouncer/IntervalAnnouncer.
 net/supremesurvival/supremecore/commonUtils/morality/player/MoralPlayer$MoralStanding.class
 net/supremesurvival/supremecore/commonUtils/landmarks/LandmarkManager.class
 net/supremesurvival/supremecore/commonUtils/TitleUtility.class
+net/supremesurvival/supremecore/commonUtils/placeholder/SupremePlaceholder.class
 net/supremesurvival/supremecore/commonUtils/morality/player/MoralPlayer.class
 net/supremesurvival/supremecore/commonUtils/landmarks/Landmark.class
 net/supremesurvival/supremecore/commonUtils/intervalAnnouncer/ActionCommands.class
@@ -22,6 +23,7 @@ net/supremesurvival/supremecore/commonUtils/Logger$1.class
 net/supremesurvival/supremecore/commandUtils/SupremeTabs.class
 net/supremesurvival/supremecore/mobUtils/MobLoot.class
 net/supremesurvival/supremecore/voteUtils/weather/VoteWeather.class
+net/supremesurvival/supremecore/commonUtils/morality/MoralityPlaceholderExpansion.class
 net/supremesurvival/supremecore/voteUtils/time/VoteEvent.class
 net/supremesurvival/supremecore/SupremeCore.class
 net/supremesurvival/supremecore/commonUtils/artefacts/Artefact.class

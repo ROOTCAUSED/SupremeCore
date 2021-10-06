@@ -4,6 +4,7 @@ import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
 import net.supremesurvival.supremecore.commonUtils.Logger;
 import net.supremesurvival.supremecore.commonUtils.intervalAnnouncer.IntervalAnnouncer;
 import net.supremesurvival.supremecore.commonUtils.morality.Morality;
+import net.supremesurvival.supremecore.commonUtils.placeholder.SupremePlaceholder;
 import net.supremesurvival.supremecore.commonUtils.tomes.TomeManager;
 import net.supremesurvival.supremecore.commonUtils.tomes.TomesCommand;
 import net.supremesurvival.supremecore.mobUtils.HorseInfo;
@@ -57,6 +58,7 @@ public final class SupremeCore extends JavaPlugin implements Listener {
     }
 
     public void initUtils() {
+        SupremePlaceholder.enable(this);
         this.getServer().getPluginManager().registerEvents(this, this);
         intervalAnnouncer.enable();
 
