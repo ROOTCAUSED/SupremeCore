@@ -2,6 +2,8 @@ package net.supremesurvival.supremecore;
 import net.supremesurvival.supremecore.commonUtils.ChatUtil;
 import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
 import net.supremesurvival.supremecore.commonUtils.Logger;
+import net.supremesurvival.supremecore.commonUtils.artefacts.ArtefactManager;
+import net.supremesurvival.supremecore.commonUtils.artefacts.ArtefactsCommand;
 import net.supremesurvival.supremecore.commonUtils.intervalAnnouncer.IntervalAnnouncer;
 import net.supremesurvival.supremecore.commonUtils.morality.Morality;
 import net.supremesurvival.supremecore.commonUtils.placeholder.SupremePlaceholder;
@@ -29,6 +31,8 @@ public final class SupremeCore extends JavaPlugin implements Listener {
         super.onEnable();
         configUtility.initCfg();
         TomeManager.enable();
+        ArtefactManager.enable();
+        this.getCommand("Artefacts").setExecutor(new ArtefactsCommand());
         this.getCommand("Tomes").setExecutor(new TomesCommand());
         this.initHooks();
         this.initUtils();

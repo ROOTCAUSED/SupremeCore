@@ -1,0 +1,12 @@
+Artefacts:
+  artefact1:
+    type: "weapon"
+    name: "&7Steel Sword"
+    lore:
+      - "&7A fine steel blade crafted"
+      - "&7by master smiths at the capital"
+      - "&7SkyForge."
+    rarity: "Common"
+    stats:
+      damage: 8
+    itemType: IRON_SWORD

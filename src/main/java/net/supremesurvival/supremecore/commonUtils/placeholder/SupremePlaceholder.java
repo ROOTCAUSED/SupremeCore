@@ -6,7 +6,8 @@ import net.supremesurvival.supremecore.commonUtils.morality.Morality;
 import net.supremesurvival.supremecore.commonUtils.morality.MoralityPlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-
+//This class will serve as a single place for us to return placeholder responses. Placeholder variables will be loaded into the switch case below.
+//Shouldnt really get too large, even if it did i dont think it'd cause issues. If server sets on fire will revisit.
 public class SupremePlaceholder {
     public static SupremeCore pl;
 

@@ -1,15 +1,17 @@
 package net.supremesurvival.supremecore.commonUtils.tomes;
 
-import com.mysql.cj.log.Log;
 import net.supremesurvival.supremecore.commonUtils.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 //This class will allow us to add lore tomes to the server. Lore tomes will be ingame Written_Books (by default can only
 //be written by a player and have limited use) which are filled from a config.yml file.

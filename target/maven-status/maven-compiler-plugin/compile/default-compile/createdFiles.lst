@@ -5,6 +5,7 @@ net/supremesurvival/supremecore/commonUtils/TitleUtility.class
 net/supremesurvival/supremecore/commonUtils/placeholder/SupremePlaceholder.class
 net/supremesurvival/supremecore/commonUtils/morality/player/MoralPlayer.class
 net/supremesurvival/supremecore/commonUtils/landmarks/Landmark.class
+net/supremesurvival/supremecore/commonUtils/artefacts/ArtefactsCommand.class
 net/supremesurvival/supremecore/commonUtils/intervalAnnouncer/ActionCommands.class
 net/supremesurvival/supremecore/commonUtils/ConfigUtility.class
 net/supremesurvival/supremecore/voteUtils/weather/VoteUtil.class
@@ -12,7 +13,6 @@ net/supremesurvival/supremecore/commonUtils/ChatUtil.class
 net/supremesurvival/supremecore/commonUtils/landmarks/Landmark$LandmarkType.class
 net/supremesurvival/supremecore/commonUtils/Logger$LogType.class
 net/supremesurvival/supremecore/commonUtils/intervalAnnouncer/IntervalTask.class
-net/supremesurvival/supremecore/commonUtils/artefacts/Armoury.class
 net/supremesurvival/supremecore/commonUtils/intervalAnnouncer/PlayerMsgTask.class
 net/supremesurvival/supremecore/mobUtils/HorseInfo.class
 net/supremesurvival/supremecore/voteUtils/time/VoteUtil.class
@@ -25,6 +25,7 @@ net/supremesurvival/supremecore/mobUtils/MobLoot.class
 net/supremesurvival/supremecore/voteUtils/weather/VoteWeather.class
 net/supremesurvival/supremecore/commonUtils/morality/MoralityPlaceholderExpansion.class
 net/supremesurvival/supremecore/voteUtils/time/VoteEvent.class
+net/supremesurvival/supremecore/commonUtils/artefacts/ArtefactManager.class
 net/supremesurvival/supremecore/SupremeCore.class
 net/supremesurvival/supremecore/commonUtils/artefacts/Artefact.class
 net/supremesurvival/supremecore/dbinterface/SupremeSQL.class

@@ -1,5 +1,6 @@
 package net.supremesurvival.supremecore.commonUtils.morality;
 
+import com.palmergames.bukkit.towny.event.player.PlayerKilledPlayerEvent;
 import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
 import net.supremesurvival.supremecore.commonUtils.Logger;
 import net.supremesurvival.supremecore.commonUtils.morality.player.MoralPlayer;
@@ -72,6 +73,19 @@ public class Morality implements Listener {
                 moralPlayer.reduceMorality(50);
                 moralityCheck(moralPlayer);
             }
+        }
+    }
+    @EventHandler
+    public void playerKill(PlayerKilledPlayerEvent event){
+        Player killer = event.getKiller();
+        Player victim = event.getVictim();
+        MoralPlayer moralVictim = moralManagerList.get(victim.getUniqueId());
+        MoralPlayer moralKiller = moralManagerList.get(killer.getUniqueId());
+        if(moralVictim.getStanding()== MoralPlayer.MoralStanding.DARK || moralVictim.getStanding()== MoralPlayer.MoralStanding.EVIL){
+            moralKiller.addMorality(150);
+
+        }else if(moralVictim.getStanding()== MoralPlayer.MoralStanding.NEUTRAL || moralVictim.getStanding()== MoralPlayer.MoralStanding.GOOD){
+            moralKiller.reduceMorality(150);
         }
     }
 

@@ -9,7 +9,10 @@ depend: [WorldGuard]
 permissions:
   announcer.send:
     description: send an announcement to all players.
-    default: op
+    default:  op
+  tomes.retrieve:
+    description: retrieves all tomes.
+    default:  op
 commands:
   HorseInfo:
     description: Your description
@@ -19,3 +22,6 @@ commands:
     aliases: [aa]
   Tomes:
     description: manages custom tomes
+    permission: tomes.retrieve
+  Artefacts:
+    description: custom items

@@ -3,6 +3,7 @@
 /Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/commonUtils/intervalAnnouncer/IntervalTask.java
 /Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/commonUtils/intervalAnnouncer/IntervalAnnouncer.java
 /Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/commonUtils/ConfigUtility.java
+/Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/commonUtils/placeholder/SupremePlaceholder.java
 /Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/commonUtils/Logger.java
 /Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/commonUtils/intervalAnnouncer/ActionAPI.java
 /Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/commonUtils/artefacts/Artefact.java
@@ -15,6 +16,7 @@
 /Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/commonUtils/intervalAnnouncer/AnnounceTask.java
 /Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/commonUtils/tomes/TomesCommand.java
 /Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/voteUtils/time/VoteUtil.java
+/Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/commonUtils/morality/MoralityPlaceholderExpansion.java
 /Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/commonUtils/intervalAnnouncer/ActionManager.java
 /Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/commonUtils/morality/player/MoralPlayer.java
 /Users/chrisblakey/IntelliJ/SupremeCore/src/main/java/net/supremesurvival/supremecore/voteUtils/time/VoteEvent.java

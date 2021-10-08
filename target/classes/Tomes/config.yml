@@ -1,5 +1,6 @@
 Tomes:
   Tome1:
+    ==: net.supremesurvival.supremecore.commonUtils.tomes.Tome
     author: William ShakeStick
     title: Spamlet
     cover: "Cover text here."
@@ -17,6 +18,7 @@ Tomes:
       - "&e[Common]"
 
   Tome2:
+    ==: net.supremesurvival.supremecore.commonUtils.tomes.Tome
     author: William ShakeStick
     title: Bromeo and wholiette?
     preamble: "Test test test"
@@ -32,6 +34,7 @@ Tomes:
       - "&e[Common]"
 
   Tome3:
+    ==: net.supremesurvival.supremecore.commonUtils.tomes.Tome
     author: Golgatha Irellion
     title: Battle of Sancre Tor
     preamble: "An Irellion account of the battle of Sancre Tor"

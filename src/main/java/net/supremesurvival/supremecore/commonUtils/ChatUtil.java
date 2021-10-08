@@ -9,10 +9,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class ChatUtil {
-    private final SupremeCore plugin;
     private boolean placeholderAPI;
     public ChatUtil(SupremeCore plugin){
-        this.plugin = plugin;
         this.placeholderAPI = plugin.placeholderAPI;
     }
     public String formatCC(String msg){
