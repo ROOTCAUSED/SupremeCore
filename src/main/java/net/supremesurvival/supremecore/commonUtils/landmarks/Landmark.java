@@ -40,6 +40,7 @@ public class Landmark {
     public enum LandmarkType {
         CAVE,
         RUIN,
-        FORT
+        FORT,
+        VILLAGE
     }
 }

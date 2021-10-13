@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.map.MinecraftFont;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class Tome {
         tomeMeta.setAuthor(author);
         tomeMeta.setTitle(title);
         this.preamble = preamble;
-        addPages(compilePages(message));
+        addPages(getPages(message));
         Iterator newLoreIterator = lore.iterator();
         List<String> tempLore = new ArrayList<String>();
         if(tomeMeta.hasLore()){
@@ -61,7 +62,7 @@ public class Tome {
     //new lines is an acceptable middleground.
     public List<String> compilePages(String message){
         Logger.sendMessage(message, Logger.LogType.INFO, "Tomes");
-        message = replaceNewLines(message);
+        //message = replaceNewLines(message);
         List<String> pages = new ArrayList<>();
         if(message.length() < 250){
             pages.add(message);
@@ -92,6 +93,71 @@ public class Tome {
         while(pageIterator.hasNext()){
             tomeMeta.addPage((String)pageIterator.next());
         }
+    }
+    private static List<String> getPages(String rawText){
+        rawText = "\n" + rawText;
+        List<String> pages = new ArrayList<String>();
+        Logger.sendMessage(rawText, Logger.LogType.INFO,"Tomes");
+
+        List<String> lines = getLines(rawText);
+        String pageText = "";
+        for(int i = 1; i < lines.size(); i++){
+            pageText += lines.get(i);
+            if(i != 1 && i % 14 == 0){
+                pages.add(pageText);
+                Logger.sendMessage(pageText, Logger.LogType.INFO,"Tomes");
+                pageText= "";
+            }
+        }
+        if(!pageText.isEmpty())
+            pages.add(pageText);
+        return pages;
+    }
+
+    private static List<String> getLines(String rawText){
+        final MinecraftFont font = new MinecraftFont();
+        final int maxLineWidth = font.getWidth("LLLLLLLLLLLLLLLLLLL"); //should return a full line in minecraft font, 113 px
+        List<String> lines = new ArrayList<>();
+        try{
+            for(String section : rawText.split("\n")){
+                if(section.equals(""))
+                    lines.add("\n");
+                else {
+                    String[] words = ChatColor.stripColor(section).split(" ");
+                    String line = "";
+                    for(int index = 0; index < words.length; index ++){
+                        String word = words[index];
+                        if(line.isEmpty()) {
+                            line = word;
+                            continue;
+                        }
+                        int spaces = 0;
+                        if(font.getWidth(" ") == 2){
+                            spaces = 1;
+                            for(int i = 0; i < line.length(); ++i)
+                                if(line.charAt(i) == ' ')
+                                    spaces++;
+                        }
+                        if(font.getWidth(line + " " + word) + spaces > maxLineWidth) {
+                            lines.add(line + '\n');
+                            line = word;
+                            Logger.sendMessage(line.toString(), Logger.LogType.INFO,"Tomes");
+                            continue;
+                        }
+
+                        line += " " + word;
+                    }
+                    if(!line.equals("")){
+                        Logger.sendMessage(line.toString(), Logger.LogType.INFO,"Tomes");
+                        lines.add(line + "\n");
+                    }
+                }
+            }
+        }catch (IllegalArgumentException exception){
+            lines.clear();
+            Logger.sendMessage(exception.toString(), Logger.LogType.INFO,"Tomes");
+        }
+        return lines;
     }
 
 
