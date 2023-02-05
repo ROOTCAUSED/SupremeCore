@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SupremeCore:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SupremeCore_jar</output-path>
+    <root id="archive" name="SupremeCore.jar">
+      <element id="module-output" name="SupremeCore" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/PlaceholderAPI-2.11.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
