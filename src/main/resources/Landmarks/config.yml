@@ -1,4 +1,5 @@
 Landmarks:
-  1:
-    Name: "Deep Fallows Basin"
+  DeepFallows:
     region_ID: "test"
+    World: "Survival"
+    Announcement: "A cold air bellows out from inside"

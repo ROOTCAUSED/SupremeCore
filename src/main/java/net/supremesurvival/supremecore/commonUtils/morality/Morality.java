@@ -28,12 +28,10 @@ public class Morality implements Listener {
         moralityConfig = ConfigUtility.getModuleConfig("Morality");
         moralManagerList = new HashMap<UUID, MoralPlayer>();
         if (!(Bukkit.getServer().getOnlinePlayers().size()==0)){
-            Iterator onlinePlayerIterator = Bukkit.getOnlinePlayers().iterator();
-            while(onlinePlayerIterator.hasNext()){
-                  Player player = (Player)onlinePlayerIterator.next();
-                  moralManagerList.put(player.getUniqueId(),new MoralPlayer(player, 0, MoralPlayer.MoralStanding.NEUTRAL));
-                  Logger.sendMessage("Player Morality for " + player.getDisplayName() + "0", Logger.LogType.INFO, "Morality");
-                }
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                moralManagerList.put(player.getUniqueId(), new MoralPlayer(player, 0, MoralPlayer.MoralStanding.NEUTRAL));
+                Logger.sendMessage("Player Morality for " + player.displayName().toString() + "0", Logger.LogType.INFO, "Morality");
+            }
             }
         }
     public static void disable(){
@@ -117,7 +115,7 @@ public class Morality implements Listener {
         if(morality > neutralMin && morality < goodMin){
             player.updateMoralStanding(MoralPlayer.MoralStanding.NEUTRAL);
         }
-        if(morality <neutralMin){
+        if(morality < neutralMin){
             player.updateMoralStanding(MoralPlayer.MoralStanding.EVIL);
         }
     }

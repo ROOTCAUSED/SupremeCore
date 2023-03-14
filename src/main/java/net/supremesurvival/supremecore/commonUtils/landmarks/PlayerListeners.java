@@ -5,6 +5,7 @@ import net.citizensnpcs.api.CitizensAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class PlayerListeners {
@@ -13,6 +14,7 @@ public class PlayerListeners {
 
     }
 
+    @EventHandler
     public void onPlayerMove(PlayerMoveEvent event){
         //ignore citizens npc's
         if(Bukkit.getPluginManager().getPlugin("Citizens2").isEnabled() && CitizensAPI.getNPCRegistry().isNPC(event.getPlayer())){
@@ -30,6 +32,10 @@ public class PlayerListeners {
         Location from = event.getFrom();
         //we're now going to take their location data and check if any of the regions in our landmark manager contain either their to or from positions.
         //If they do then we know a player is exiting or entering a landmark region.
+
+    }
+
+    public void discoverLandmark(Player player, String landmarkName){
 
     }
 }

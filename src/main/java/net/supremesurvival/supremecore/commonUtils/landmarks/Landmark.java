@@ -1,18 +1,26 @@
 package net.supremesurvival.supremecore.commonUtils.landmarks;
 
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import net.supremesurvival.supremecore.SupremeCore;
 import org.bukkit.Location;
 
 public class Landmark {
     private LandmarkType type;
-    private Location location;
+    private Region location;
     private String title;
     private String announcement;
+    private String id;
 
+    public static SupremeCore pl;
     public void setType(LandmarkType type){
         this.type = type;
     }
 
-    public void setLocation(Location location){
+    public void setLocation(Region location){
         this.location = location;
     }
 
@@ -26,9 +34,13 @@ public class Landmark {
 
     public LandmarkType getType(){
         return this.type;
-
     }
-
+    public boolean isRegion(){
+        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        RegionManager regions = container.get(location.getWorld());
+        regions.getRegion(id);
+        return true;
+    }
     public String getTitle(){
         return this.title;
     }
@@ -41,6 +53,9 @@ public class Landmark {
         CAVE,
         RUIN,
         FORT,
-        VILLAGE
+        VILLAGE,
+        WAYSHRINE,
+        MOUNTAIN,
+        MISC,
     }
 }

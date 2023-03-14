@@ -23,7 +23,7 @@ public class Logger {
         }
     }
     private static void sendErrLog(String message){
-        Bukkit.getConsoleSender().sendMessage();
+        Bukkit.getConsoleSender().sendMessage(message);
     }
     private static void sendInfoLog(String message, String handle){
         Bukkit.getConsoleSender().sendMessage("["+handle+"][INFO][+]"+message);
