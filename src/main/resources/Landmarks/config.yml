@@ -3,3 +3,5 @@ Landmarks:
     region_ID: "test"
     World: "Survival"
     Announcement: "A cold air bellows out from inside"
+    Type: "Cave"
+    Name: "DeepFallows"

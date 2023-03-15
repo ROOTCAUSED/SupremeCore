@@ -32,7 +32,6 @@ public class PlayerListeners {
         Location from = event.getFrom();
         //we're now going to take their location data and check if any of the regions in our landmark manager contain either their to or from positions.
         //If they do then we know a player is exiting or entering a landmark region.
-
     }
 
     public void discoverLandmark(Player player, String landmarkName){
