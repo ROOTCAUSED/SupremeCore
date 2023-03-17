@@ -13,14 +13,14 @@ import org.bukkit.Location;
 public class Landmark {
     private LandmarkType type;
     private ProtectedRegion region;
-    private String title;
+    private String name;
     private String announcement;
     private String id;
-
-    public Landmark(LandmarkType type, ProtectedRegion region, String title, String announcement ){
-        Logger.sendMessage("Registering Landmark: " + title, Logger.LogType.INFO, "[Landmarks]" );
+    public Landmark(LandmarkType type, ProtectedRegion region, String name, String announcement, String id ){
+        Logger.sendMessage("Registering Landmark: " + name + " " + id, Logger.LogType.INFO, "[Landmarks]" );
         this.type = type;
-        this.title = title;
+        this.name = name;
+        this.id = id;
         this.announcement = announcement;
         this.region = region;
     }
@@ -32,8 +32,8 @@ public class Landmark {
         this.region = region;
     }
 
-    public void setTitle(String title){
-        this.title = title;
+    public void setTitle(String name){
+        this.name = name;
     }
 
     public void setAnnouncement(String announcement){
@@ -46,11 +46,15 @@ public class Landmark {
     public ProtectedRegion getRegion() { return this.region;}
 
     public String getTitle(){
-        return this.title;
+        return this.name;
     }
 
     public String getAnnouncement(){
         return this.announcement;
+    }
+
+    public String getID(){
+        return this.id;
     }
 
     public enum LandmarkType {

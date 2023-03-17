@@ -19,12 +19,14 @@ public class SupremePlaceholder {
                 return String.valueOf(Morality.getMorality(player));
             case "standing":
                 Logger.sendMessage("returned Morality", Logger.LogType.INFO, "SupremePAPI");
-                return Morality.getMoralStanding(player);
+                String standingString = Morality.getMoralStanding(player);
+                standingString = standingString.substring(0,1).toUpperCase() + standingString.substring(1).toLowerCase();
+                return standingString;
             default:
                 return null;
         }
     }
-    public static void register(String handle){
+    public static void register(){
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI")!= null){
             new MoralityPlaceholderExpansion(pl).register();
         }

@@ -3,9 +3,11 @@ package net.supremesurvival.supremecore.commonUtils.morality;
 import com.palmergames.bukkit.towny.event.player.PlayerKilledPlayerEvent;
 import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
 import net.supremesurvival.supremecore.commonUtils.Logger;
+import net.supremesurvival.supremecore.commonUtils.fileHandler.FileHandler;
 import net.supremesurvival.supremecore.commonUtils.morality.player.MoralPlayer;
 import net.supremesurvival.supremecore.commonUtils.placeholder.SupremePlaceholder;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -17,27 +19,48 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.raid.RaidFinishEvent;
 import org.bukkit.event.raid.RaidTriggerEvent;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
+import static net.supremesurvival.supremecore.commonUtils.landmarks.PlayerListeners.landmarksDiscovered;
+
+//Working - could do with cleaning up.
 public class Morality implements Listener {
     private static FileConfiguration moralityConfig;
     private static HashMap<UUID, MoralPlayer> moralManagerList;
+    private static Map<String, Integer> boundsMap = new LinkedHashMap<>();
+    private static File dataFile;
 
     public static void enable(){
-        SupremePlaceholder.register("Morality");
+        SupremePlaceholder.register();
         moralityConfig = ConfigUtility.getModuleConfig("Morality");
+        ConfigurationSection moralityBounds = moralityConfig.getConfigurationSection("moralitybounds");
+        Logger.sendMessage(moralityBounds.getKeys(false).toString(), Logger.LogType.INFO, "Morality");
+        for (String key : moralityBounds.getKeys(false)) {
+            int value = moralityBounds.getInt(key);
+            Logger.sendMessage(value + key, Logger.LogType.INFO, "Morality");
+            boundsMap.put(key.toUpperCase(), value);
+        }
         moralManagerList = new HashMap<UUID, MoralPlayer>();
-        if (!(Bukkit.getServer().getOnlinePlayers().size()==0)){
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                moralManagerList.put(player.getUniqueId(), new MoralPlayer(player, 0, MoralPlayer.MoralStanding.NEUTRAL));
-                Logger.sendMessage("Player Morality for " + player.displayName().toString() + "0", Logger.LogType.INFO, "Morality");
-            }
-            }
+        dataFile = FileHandler.getDataFile("/Morality/playerdata.txt");
         }
     public static void disable(){
-        moralManagerList.clear();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile))){
+        for (Map.Entry<UUID, MoralPlayer> entry : moralManagerList.entrySet()){
+            UUID playerID = entry.getKey();
+            Integer morality = entry.getValue().getMorality();
+            writer.write(playerID.toString() + ":" + morality);
+            writer.write("\n");
+            Logger.sendMessage("Wrote playerdata for " + playerID + ": Morality = " + morality, Logger.LogType.INFO, "Morality");
+        }
     }
-
+        catch (
+    IOException e) {
+        Logger.sendMessage(e.toString(), Logger.LogType.ERR, "[Morality]");
+    }}
     @EventHandler
     public void HeroEvent(RaidFinishEvent event){
         List<Player> players = event.getWinners();
@@ -79,10 +102,10 @@ public class Morality implements Listener {
         Player victim = event.getVictim();
         MoralPlayer moralVictim = moralManagerList.get(victim.getUniqueId());
         MoralPlayer moralKiller = moralManagerList.get(killer.getUniqueId());
-        if(moralVictim.getStanding()== MoralPlayer.MoralStanding.DARK || moralVictim.getStanding()== MoralPlayer.MoralStanding.EVIL){
+        if(moralVictim.getMorality()< -250){
             moralKiller.addMorality(150);
 
-        }else if(moralVictim.getStanding()== MoralPlayer.MoralStanding.NEUTRAL || moralVictim.getStanding()== MoralPlayer.MoralStanding.GOOD){
+        }else if(moralVictim.getMorality()> 250){
             moralKiller.reduceMorality(150);
         }
     }
@@ -92,32 +115,57 @@ public class Morality implements Listener {
         Player player = event.getPlayer();
         if(!player.hasPlayedBefore()){
             //addplayer data with 0 values to wherever it ends up stored also
-            moralManagerList.put(player.getUniqueId(),new MoralPlayer(player, 0, MoralPlayer.MoralStanding.NEUTRAL));
-        } else {
-            //load player data from wherever it is stored
-            moralManagerList.put(player.getUniqueId(), new MoralPlayer(player, 0, MoralPlayer.MoralStanding.NEUTRAL));
+            moralManagerList.put(player.getUniqueId(),new MoralPlayer(player.getUniqueId(), 0));
+            return;
         }
-    }
+        if(moralManagerList.containsKey(player.getUniqueId())){
+            //test
+            moralityCheck(moralManagerList.get(player.getUniqueId()));
+            return;
+        }
+        //load player data from wherever it is stored
+        HashMap<UUID, MoralPlayer> moralManagerListTMP = FileHandler.loadMoralityData(event.getPlayer().getUniqueId(), moralManagerList, dataFile);
+        if (moralManagerListTMP == null){
+            Logger.sendMessage("Player data for " + player.getName() + " not found, inserting default value", Logger.LogType.INFO, "Morality");
+            moralManagerList.put(player.getUniqueId(),new MoralPlayer(player.getUniqueId(),0));
+            moralityCheck(moralManagerList.get(player.getUniqueId()));
+            return;
+        }
+        moralManagerList = moralManagerListTMP;
+        //test
+        moralityCheck(moralManagerList.get(player.getUniqueId()));
+        }
 
     //This class will check the players morality value against the configured morality bounds
     public static void moralityCheck(MoralPlayer player){
-        int evilMax = moralityConfig.getInt("moralitybounds.Evil.upper-Bound");
-        int neutralMin = moralityConfig.getInt("moralitybounds.Neutral.low-Bound");
-        int neutralMax = moralityConfig.getInt("moralitybounds.Neutral.upper-Bound");
-        int goodMin = moralityConfig.getInt("moralitybounds.Good.low-Bound");
-
         Player bukkitPlayer = player.getPlayer();
-        bukkitPlayer.sendMessage("Your morality is " + player.getMorality() + ":" + player.getStanding());
+        String moralStanding = "";
         int morality = player.getMorality();
-        if(morality > neutralMin && morality > neutralMax && morality > goodMin){
-            player.updateMoralStanding(MoralPlayer.MoralStanding.GOOD);
+        for (Map.Entry<String, Integer> entry : boundsMap.entrySet()) {
+            int upperBound = entry.getValue();
+            int lowerBound = 0;
+            if (upperBound > 0) {
+                lowerBound = boundsMap.entrySet()
+                        .stream()
+                        .filter(e -> e.getValue() < 0)
+                        .mapToInt(Map.Entry::getValue)
+                        .max()
+                        .orElse(Integer.MIN_VALUE);
+            } else {
+                lowerBound = boundsMap.entrySet()
+                        .stream()
+                        .filter(e -> e.getValue() >= 0)
+                        .mapToInt(Map.Entry::getValue)
+                        .min()
+                        .orElse(Integer.MAX_VALUE);
+            }
+            if (morality <= upperBound && morality >= lowerBound) {
+                moralStanding = entry.getKey();
+                player.updateMoralStanding(MoralPlayer.MoralStanding.valueOf(moralStanding));
+                break;
+            }
         }
-        if(morality > neutralMin && morality < goodMin){
-            player.updateMoralStanding(MoralPlayer.MoralStanding.NEUTRAL);
-        }
-        if(morality < neutralMin){
-            player.updateMoralStanding(MoralPlayer.MoralStanding.EVIL);
-        }
+        bukkitPlayer.sendMessage("Your morality is " + player.getMorality() + ":" + player.getStanding());
     }
     public static String getMoralStanding(Player player){
         return moralManagerList.get(player.getUniqueId()).getStanding().toString();

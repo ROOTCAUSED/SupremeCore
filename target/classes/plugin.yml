@@ -25,3 +25,6 @@ commands:
     permission: tomes.retrieve
   Artefacts:
     description: custom items
+  Landmarks:
+    description: lists landmarks
+    permission: landmarks.list

@@ -13,19 +13,19 @@ public class TitleUtility {
     public int stay;
     public int fadeOut;
     //Displays a title to all players on current server
-    public void sendTitleAll(String title, String subtitle, int fadeIn, int stay, int fadeOut) {
+    public static void sendTitleAll(String title, String subtitle, int fadeIn, int stay, int fadeOut) {
         Bukkit.getOnlinePlayers().forEach(player -> {
             player.sendTitle(ChatColor.translateAlternateColorCodes('&', title), ChatColor.translateAlternateColorCodes('&',subtitle), fadeIn, stay, fadeOut);
         });
     }
     //Displays a title to all players on a given world of the current server
-    public void sendToWorld(String title, String subtitle, int fadeIn, int stay, int fadeOut, World world){
+    public static void sendToWorld(String title, String subtitle, int fadeIn, int stay, int fadeOut, World world){
         world.getPlayers().forEach(player -> {
             player.sendTitle(ChatColor.translateAlternateColorCodes('&', title), ChatColor.translateAlternateColorCodes('&',subtitle), fadeIn, stay, fadeOut);
         });
     }
     //Displays a title to a specified player on the current server.
-    public void sendPlayer(String title, String subtitle, int fadeIn, int stay, int fadeOut, Player player){
+    public static void sendPlayer(String title, String subtitle, int fadeIn, int stay, int fadeOut, Player player){
         player.sendTitle(ChatColor.translateAlternateColorCodes('&', title), ChatColor.translateAlternateColorCodes('&',subtitle), fadeIn, stay, fadeOut);
     }
     }

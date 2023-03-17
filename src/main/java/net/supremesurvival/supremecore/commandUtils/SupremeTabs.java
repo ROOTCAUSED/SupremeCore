@@ -6,7 +6,7 @@ import org.bukkit.command.TabCompleter;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//needs work
 public class SupremeTabs implements TabCompleter {
     List<String> arguments = new ArrayList<String>();
 

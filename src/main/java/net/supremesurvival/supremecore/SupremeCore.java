@@ -4,7 +4,11 @@ import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
 import net.supremesurvival.supremecore.commonUtils.Logger;
 import net.supremesurvival.supremecore.commonUtils.artefacts.ArtefactManager;
 import net.supremesurvival.supremecore.commonUtils.artefacts.ArtefactsCommand;
+import net.supremesurvival.supremecore.commonUtils.fileHandler.FileHandler;
 import net.supremesurvival.supremecore.commonUtils.intervalAnnouncer.IntervalAnnouncer;
+import net.supremesurvival.supremecore.commonUtils.landmarks.LandmarkCommand;
+import net.supremesurvival.supremecore.commonUtils.landmarks.LandmarkManager;
+import net.supremesurvival.supremecore.commonUtils.landmarks.PlayerListeners;
 import net.supremesurvival.supremecore.commonUtils.morality.Morality;
 import net.supremesurvival.supremecore.commonUtils.placeholder.SupremePlaceholder;
 import net.supremesurvival.supremecore.commonUtils.tomes.TomeManager;
@@ -19,12 +23,16 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.supremesurvival.supremecore.mobUtils.MobLoot;
 import com.sk89q.worldguard.*;
+
+import java.io.File;
+
 public final class SupremeCore extends JavaPlugin implements Listener {
     public ChatUtil chatUtil = new ChatUtil(this);
     public boolean placeholderAPI;
     public boolean townyAdvanced;
     public ConfigUtility configUtility = new ConfigUtility(this);
     IntervalAnnouncer intervalAnnouncer = new IntervalAnnouncer(this);
+    FileHandler fileHandler = new FileHandler(this);
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -32,6 +40,7 @@ public final class SupremeCore extends JavaPlugin implements Listener {
         configUtility.initCfg();
         TomeManager.enable();
         ArtefactManager.enable();
+        LandmarkManager.enable();
         this.getCommand("Artefacts").setExecutor(new ArtefactsCommand());
         this.getCommand("Tomes").setExecutor(new TomesCommand());
         this.initHooks();
@@ -40,14 +49,17 @@ public final class SupremeCore extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new MobLoot(), this);
         Logger.sendMessage((ChatColor.YELLOW + "[SupremeCore] [+] " + ChatColor.GRAY + "SupremeNerf Gold Filter Loaded."), Logger.LogType.INFO, "SupremeCore");
         this.getCommand("HorseInfo").setExecutor(new HorseInfo());
+        this.getCommand("Landmarks").setExecutor(new LandmarkCommand());
         Morality.enable();
         this.getServer().getPluginManager().registerEvents(new Morality(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
         Morality.disable();
+        LandmarkManager.disable();
     }
 
     public void initHooks() {

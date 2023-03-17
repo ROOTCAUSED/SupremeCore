@@ -1,10 +1,22 @@
 moralitybounds:
-  Neutral:
-    low-Bound: -49
-    upper-Bound: 49
-  Evil:
-    upper-Bound: -50
-    low-Bound: -100
-  Good:
-    low-Bound: 50
-    upper-Bound: 100
+  DIVINE: 16000
+  SAINT: 10000
+  PURE: 6000
+  HEROIC: 3600
+  RIGHTEOUS: 2160
+  VIRTUOUS: 1296
+  NOBLE: 777
+  HONOURABLE: 466
+  LAWFUL: 280
+  RESPECTABLE: 168
+  NEUTRAL: 0
+  CHAOTIC: -168
+  CORRUPT: -280
+  DISHONOURABLE: -466
+  INFAMOUS: -777
+  RUTHLESS: -1296
+  VILLAINOUS: -2160
+  MALEVOLENT: -3600
+  WRETCHED: -6000
+  DIABOLICAL: -10000
+  DEMONIC: -16000

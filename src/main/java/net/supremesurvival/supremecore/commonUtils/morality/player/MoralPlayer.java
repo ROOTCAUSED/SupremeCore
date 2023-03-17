@@ -1,20 +1,22 @@
 package net.supremesurvival.supremecore.commonUtils.morality.player;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class MoralPlayer {
-    Player player;
+    UUID uuid;
     Integer morality;
     MoralStanding moralStanding;
 
-    public MoralPlayer(Player player, int morality, MoralStanding moralStanding){
-        this.player = player;
+    public MoralPlayer(UUID uuid, int morality){
+        this.uuid = uuid;
         this.morality = morality;
-        this.moralStanding = moralStanding;
 
     }
     public Player getPlayer(){
-        return this.player;
+        return Bukkit.getPlayer(this.uuid);
     }
     public int getMorality(){
         return this.morality;
@@ -39,10 +41,29 @@ public class MoralPlayer {
         this.moralStanding = standing;
     }
     public enum MoralStanding{
+        DIVINE,
+        SAINT,
+        PURE,
+        HEROIC,
+        RIGHTEOUS,
+        VIRTUOUS,
+        NOBLE,
+        HONOURABLE,
+        LAWFUL,
+        RESPECTABLE,
         NEUTRAL,
-        EVIL,
-        GOOD,
-        DARK,
+        CHAOTIC,
+        CORRUPT,
+        DISHONOURABLE,
+        INFAMOUS,
+        RUTHLESS,
+        VILLAINOUS,
+        MALEVOLENT,
+        WRETCHED,
+        DIABOLICAL,
+        DEMONIC
+
     }
+
 }
 
