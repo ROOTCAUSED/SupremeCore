@@ -47,4 +47,22 @@ public class FileHandler {
         }
         return null;
     }
+
+    public static HashMap loadAllMoralityData(File file, HashMap hashmap){
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))){
+            String line;
+            while ((line=reader.readLine())!=null){
+                String[] parts = line.split(":");
+                UUID playerUUID = UUID.fromString(parts[0]);
+                String data = parts [1];
+                Integer dataInt = Integer.valueOf(data);
+                MoralPlayer moralPlayer = new MoralPlayer(playerUUID, dataInt);
+                hashmap.put(playerUUID, moralPlayer);
+            }
+            return hashmap;
+}catch (IOException e){
+            Logger.sendMessage(e.getMessage(), Logger.LogType.ERR, "Landmarks");
+        }
+        return null;
+    }
 }

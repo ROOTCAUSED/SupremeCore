@@ -47,9 +47,20 @@ public class Morality implements Listener {
         moralManagerList = new HashMap<UUID, MoralPlayer>();
         dataFile = FileHandler.getDataFile("/Morality/playerdata.txt");
         }
+        //currently overwrites whole file with online users. Need to correct this. Seems that reading back the whole file and overwriting the lines where uuid is contained in moralmanagerlist is the way to go. That or switch to json.
     public static void disable(){
+        HashMap <UUID, MoralPlayer> allData = new HashMap<UUID,MoralPlayer>();
+        allData = FileHandler.loadAllMoralityData(dataFile, allData);
+        if(allData.isEmpty()){
+            return;
+        }
+        for(UUID uuid : moralManagerList.keySet()){
+            if(allData.containsKey(uuid)){
+                allData.replace(uuid, moralManagerList.get(uuid));
+            }else{allData.put(uuid, moralManagerList.get(uuid));}
+        }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile))){
-        for (Map.Entry<UUID, MoralPlayer> entry : moralManagerList.entrySet()){
+            for (Map.Entry<UUID, MoralPlayer> entry : allData.entrySet()){
             UUID playerID = entry.getKey();
             Integer morality = entry.getValue().getMorality();
             writer.write(playerID.toString() + ":" + morality);
@@ -142,25 +153,18 @@ public class Morality implements Listener {
         String moralStanding = "";
         int morality = player.getMorality();
         for (Map.Entry<String, Integer> entry : boundsMap.entrySet()) {
-            int upperBound = entry.getValue();
-            int lowerBound = 0;
-            if (upperBound > 0) {
-                lowerBound = boundsMap.entrySet()
-                        .stream()
-                        .filter(e -> e.getValue() < 0)
-                        .mapToInt(Map.Entry::getValue)
-                        .max()
-                        .orElse(Integer.MIN_VALUE);
-            } else {
-                lowerBound = boundsMap.entrySet()
-                        .stream()
-                        .filter(e -> e.getValue() >= 0)
-                        .mapToInt(Map.Entry::getValue)
-                        .min()
-                        .orElse(Integer.MAX_VALUE);
+            Logger.sendMessage("Comparing " + morality + " with " + entry.getValue() + "out of " + boundsMap.entrySet().toString(), Logger.LogType.INFO, "Morality");
+            if (morality < 0){
+                if(entry.getValue() > 0){continue;}
+                if(morality < entry.getValue()){moralStanding = entry.getKey();
+                continue;}
+                if(morality > entry.getValue()){
+                    player.updateMoralStanding(MoralPlayer.MoralStanding.valueOf(moralStanding));
+                    break;}
             }
-            if (morality <= upperBound && morality >= lowerBound) {
+            if (morality >= entry.getValue()) {
                 moralStanding = entry.getKey();
+                Logger.sendMessage("Comparing " + morality + " with " + entry.getValue(), Logger.LogType.INFO, "Morality");
                 player.updateMoralStanding(MoralPlayer.MoralStanding.valueOf(moralStanding));
                 break;
             }
