@@ -1,6 +1,5 @@
 package net.supremesurvival.supremecore.mobUtils;
 import net.supremesurvival.supremecore.commonUtils.Logger;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
@@ -19,8 +18,7 @@ public class HorseInfo implements CommandExecutor {
     DecimalFormat df = new DecimalFormat("###.###");
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(sender instanceof Player) {
-            Player player = (Player) sender;
+        if(sender instanceof Player player) {
             if (player.isInsideVehicle()) {
                 if (player.getVehicle() instanceof Horse) {
                     this.PlayerMount = (LivingEntity) player.getVehicle();

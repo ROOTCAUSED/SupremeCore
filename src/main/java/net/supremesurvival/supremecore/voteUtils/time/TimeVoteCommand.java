@@ -8,8 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class TimeVoteCommand implements CommandExecutor {
-    private SupremeCore plugin;
-    private VoteTime voteTime;
+    private final SupremeCore plugin;
+    private final VoteTime voteTime;
     public TimeVoteCommand(SupremeCore plugin, VoteTime voteTime) {
         this.plugin = plugin;
         this.voteTime = voteTime;
@@ -17,8 +17,7 @@ public class TimeVoteCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        if(commandSender instanceof Player){
-            Player player = (Player) commandSender;
+        if(commandSender instanceof Player player){
             World world = player.getWorld();
 
             if(!voteTime.voteUtil.isOverworld(player)) return true;

@@ -59,13 +59,11 @@ public class LandmarkManager {
                 UUID playerUUID = UUID.fromString(parts[0]);
                 String[] landmarkIDs = parts[1].split(";");
                 List <String> landmarks = new ArrayList<>();
-                for (String landmarkID : landmarkIDs){
-                    landmarks.add(landmarkID);
-                }
+                Collections.addAll(landmarks, landmarkIDs);
                 landmarksDiscovered.put(playerUUID,landmarks);
-                Logger.sendMessage("Loaded landmark data for " + playerUUID.toString() + " into LandmarksDiscovered Hashmap", Logger.LogType.INFO, handle);
+                Logger.sendMessage("Loaded landmark data for " + playerUUID + " into LandmarksDiscovered Hashmap", Logger.LogType.INFO, handle);
                 for (String s : landmarks) {
-                    Logger.sendMessage(s.toString(), Logger.LogType.INFO, handle);
+                    Logger.sendMessage(s, Logger.LogType.INFO, handle);
                 }
             }
         }
@@ -74,9 +72,6 @@ public class LandmarkManager {
         }
     }
 
-    public static void init(File file){
-
-    }
     public static void disable(){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile))){
             for (Map.Entry<UUID, List<String>> entry : landmarksDiscovered.entrySet()){

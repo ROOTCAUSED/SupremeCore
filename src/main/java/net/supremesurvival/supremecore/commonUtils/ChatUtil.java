@@ -1,15 +1,12 @@
 package net.supremesurvival.supremecore.commonUtils;
 
-import me.clip.placeholderapi.PlaceholderAPI;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.supremesurvival.supremecore.SupremeCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class ChatUtil {
-    private boolean placeholderAPI;
+    private final boolean placeholderAPI;
     public ChatUtil(SupremeCore plugin){
         this.placeholderAPI = plugin.placeholderAPI;
     }

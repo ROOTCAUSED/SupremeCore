@@ -6,8 +6,8 @@ import java.util.*;
 
 public class VoteWeather {
 
-    private Set<UUID> noVote = new HashSet<>();
-    private Set<UUID> yesVote = new HashSet<>();
+    private final Set<UUID> noVote = new HashSet<>();
+    private final Set<UUID> yesVote = new HashSet<>();
     public int timeToVote;
     public boolean isVoteActive;
     public int voteDelay;

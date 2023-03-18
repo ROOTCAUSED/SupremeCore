@@ -10,13 +10,13 @@ import java.util.*;
 public class FileHandler {
     private static Plugin plugin;
     public FileHandler (Plugin pl){
-        this.plugin = pl;
+        plugin = pl;
     }
     final static String handle = "FileHandler";
     public static File getDataFile(String filePath){
         Logger.sendMessage(plugin.getDataFolder().toString(), Logger.LogType.INFO, handle);
         File dataFile = new File(plugin.getDataFolder(), filePath);
-        Logger.sendMessage(dataFile.getPath().toString(), Logger.LogType.INFO,handle);
+        Logger.sendMessage(dataFile.getPath(), Logger.LogType.INFO,handle);
         return dataFile;
     }
 
@@ -32,7 +32,7 @@ public class FileHandler {
                     Integer dataInt = Integer.valueOf(data);
                     MoralPlayer moralPlayer = new MoralPlayer(playerUUID, dataInt);
                     hashMap.put(playerUUID,moralPlayer);
-                    Logger.sendMessage("Loaded Single Data for " + playerUUID.toString() + " into Hashmap", Logger.LogType.INFO, handle);
+                    Logger.sendMessage("Loaded Single Data for " + playerUUID + " into Hashmap", Logger.LogType.INFO, handle);
                     return hashMap;
                 }
             }

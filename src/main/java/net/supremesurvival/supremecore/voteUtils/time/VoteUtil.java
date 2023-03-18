@@ -20,8 +20,8 @@ import java.time.Instant;
 public class VoteUtil {
     private BukkitTask timer;
     private BossBar bossBar;
-    private VoteTime voteTime;
-    private SupremeCore plugin;
+    private final VoteTime voteTime;
+    private final SupremeCore plugin;
     TitleUtility titleUtil = new TitleUtility();
 
     public VoteUtil(SupremeCore plugin, VoteTime voteTime) {
@@ -57,7 +57,7 @@ public class VoteUtil {
 
         voteTime.getYesVote().add(player.getUniqueId());
 
-        titleUtil.sendPlayer("&bVote &eStarted","You started a time vote",0,100,0, player);
+        TitleUtility.sendPlayer("&bVote &eStarted","You started a time vote",0,100,0, player);
         player.sendMessage(ChatColor.YELLOW + "[TV] " + ChatColor.GRAY + "You automatically cast a Yes vote by starting the vote.");
 
         createBossBar();
@@ -84,7 +84,7 @@ public class VoteUtil {
             timer.cancel();
             bossBar.removeAll();
 
-        }, voteTime.timeToVote * 20);
+        }, voteTime.timeToVote * 20L);
             } else {
         player.sendMessage(ChatColor.RED + "[TV] " + ChatColor.GRAY + "It's too soon to start another time vote.");
         }

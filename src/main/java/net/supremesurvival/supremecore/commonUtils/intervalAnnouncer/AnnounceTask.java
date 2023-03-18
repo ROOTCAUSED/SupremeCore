@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class AnnounceTask implements Runnable {
-    private IntervalAnnouncer announcer;
+    private final IntervalAnnouncer announcer;
     private final String msg;
     final static String handle = "Announcer";
     public AnnounceTask(IntervalAnnouncer instance, String msg) {

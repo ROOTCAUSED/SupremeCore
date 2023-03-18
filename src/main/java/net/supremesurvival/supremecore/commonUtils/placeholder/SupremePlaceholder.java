@@ -13,17 +13,20 @@ public class SupremePlaceholder {
     final static String handle = "Supreme Placeholder";
     public static String onRequest(Player player, String string){
         Logger.sendMessage(string, Logger.LogType.INFO, "S-PAPI");
-        switch(string){
-            case "morality":
+        switch (string) {
+            case "morality" -> {
                 Logger.sendMessage("returned Morality", Logger.LogType.INFO, handle);
                 return String.valueOf(Morality.getMorality(player));
-            case "standing":
+            }
+            case "standing" -> {
                 Logger.sendMessage("returned Morality", Logger.LogType.INFO, handle);
                 String standingString = Morality.getMoralStanding(player);
-                standingString = standingString.substring(0,1).toUpperCase() + standingString.substring(1).toLowerCase();
+                standingString = standingString.substring(0, 1).toUpperCase() + standingString.substring(1).toLowerCase();
                 return standingString;
-            default:
+            }
+            default -> {
                 return null;
+            }
         }
     }
     public static void register(){

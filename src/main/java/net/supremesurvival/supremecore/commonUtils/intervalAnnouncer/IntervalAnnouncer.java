@@ -27,7 +27,7 @@ public class IntervalAnnouncer implements Listener {
     protected static boolean disableSounds;
     protected static List<String> minechat;
     protected static BukkitTask iTask;
-    private ActionCommands commands = new ActionCommands(this);
+    private final ActionCommands commands = new ActionCommands(this);
     private static ActionManager actionManager;
     protected static boolean placeholderAPI;
     SupremeCore plugin;

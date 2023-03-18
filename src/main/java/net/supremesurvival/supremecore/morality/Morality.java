@@ -28,7 +28,7 @@ import java.util.*;
 public class Morality implements Listener {
     private static FileConfiguration moralityConfig;
     private static HashMap<UUID, MoralPlayer> moralManagerList;
-    private static Map<String, Integer> boundsMap = new LinkedHashMap<>();
+    private static final Map<String, Integer> boundsMap = new LinkedHashMap<>();
     private static File dataFile;
     final static String handle = "Morality";
     public static void enable(){

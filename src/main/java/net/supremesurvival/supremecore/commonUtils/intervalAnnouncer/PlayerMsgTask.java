@@ -27,7 +27,7 @@ public class PlayerMsgTask extends BukkitRunnable {
         }
 
         if (this.p == null) {
-            if (this.name != null && IntervalAnnouncer.sending.containsKey(this.name)) {
+            if (this.name != null) {
                 IntervalAnnouncer.sending.remove(this.name);
             }
 
@@ -38,7 +38,7 @@ public class PlayerMsgTask extends BukkitRunnable {
             if (this.first) {
                 this.first = false;
                 if (IntervalAnnouncer.sending.containsKey(this.name) && IntervalAnnouncer.sending.get(this.name) != null) {
-                    ((PlayerMsgTask)IntervalAnnouncer.sending.get(this.name)).cancel();
+                    IntervalAnnouncer.sending.get(this.name).cancel();
                 }
 
                 IntervalAnnouncer.sending.put(this.name, this);
@@ -48,9 +48,7 @@ public class PlayerMsgTask extends BukkitRunnable {
                 IntervalAnnouncer.sendAnnouncement(this.p, this.msg);
                 --this.s;
             } else {
-                if (IntervalAnnouncer.sending.containsKey(this.name)) {
-                    IntervalAnnouncer.sending.remove(this.name);
-                }
+                IntervalAnnouncer.sending.remove(this.name);
 
                 this.cancel();
             }

@@ -9,8 +9,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class WeatherVoteCommand implements CommandExecutor {
-    private SupremeCore plugin;
-    private VoteWeather voteWeather;
+    private final SupremeCore plugin;
+    private final VoteWeather voteWeather;
     public WeatherVoteCommand(SupremeCore plugin, VoteWeather voteWeather) {
         this.plugin = plugin;
         this.voteWeather = voteWeather;
@@ -18,8 +18,7 @@ public class WeatherVoteCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        if(commandSender instanceof Player){
-            Player player = (Player) commandSender;
+        if(commandSender instanceof Player player){
             World world = player.getWorld();
 
             if(!voteWeather.voteUtil.isOverworld(player)) return true;

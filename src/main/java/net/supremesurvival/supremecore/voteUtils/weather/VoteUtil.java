@@ -19,8 +19,8 @@ import java.time.Instant;
 public class VoteUtil {
     private BukkitTask timer;
     private BossBar bossBar;
-    private VoteWeather voteWeather;
-    private SupremeCore plugin;
+    private final VoteWeather voteWeather;
+    private final SupremeCore plugin;
     private String voteType;
     public VoteUtil(SupremeCore plugin, VoteWeather voteWeather) {
         this.plugin = plugin;
@@ -96,9 +96,9 @@ public class VoteUtil {
                 voteWeather.getNoVote().clear();
                 timer.cancel();
                 bossBar.removeAll();
-                titleUtility.sendTitleAll(ChatColor.AQUA + "WeatherVote","Weather Changed", 1, 60,1);
+                TitleUtility.sendTitleAll(ChatColor.AQUA + "WeatherVote","Weather Changed", 1, 60,1);
 
-            }, voteWeather.timeToVote * 20);
+            }, voteWeather.timeToVote * 20L);
         } else {
             player.sendMessage(ChatColor.RED + "[WV] " + ChatColor.GRAY + "It's too soon to start another time vote.");
         }
@@ -152,17 +152,9 @@ public class VoteUtil {
                 return true;
             }
         } else if(arg.equalsIgnoreCase("storm")){
-            if(thundering & raining){
-                return false;
-            }else{
-                return true;
-            }
+            return !(thundering & raining);
         } else if(arg.equalsIgnoreCase("rain")){
-            if(raining & !thundering){
-                return false;
-            }else{
-                return true;
-            }
+            return !(raining & !thundering);
         }else{
             return true;
         }

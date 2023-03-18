@@ -16,7 +16,7 @@ import java.util.*;
 import static net.supremesurvival.supremecore.landmarks.LandmarkManager.landmarkList;
 
 public class PlayerListeners implements Listener {
-    private static HashMap<UUID, Landmark> playersInLandmarks = new HashMap<>();
+    private static final HashMap<UUID, Landmark> playersInLandmarks = new HashMap<>();
     public static HashMap<UUID, List <String>> landmarksDiscovered = new HashMap<>();
 
     final static String handle = "LandmarkPlayerListener";
@@ -24,7 +24,7 @@ public class PlayerListeners implements Listener {
     public void join(PlayerJoinEvent event){
         //need to check if player is in list, if not insert as below
         //will optimise this to only load player data on join not load all data from beginning
-        Logger.sendMessage("Placed " + event.getPlayer().getName().toString() + " into Landmarks Discovered List", Logger.LogType.INFO, handle );
+        Logger.sendMessage("Placed " + event.getPlayer().getName() + " into Landmarks Discovered List", Logger.LogType.INFO, handle );
         if(!landmarksDiscovered.containsKey(event.getPlayer().getUniqueId())){landmarksDiscovered.put(event.getPlayer().getUniqueId(),new ArrayList<>());}
     }
     @EventHandler
@@ -33,12 +33,12 @@ public class PlayerListeners implements Listener {
         if(Bukkit.getPluginManager().getPlugin("Citizens").isEnabled() && CitizensAPI.getNPCRegistry().isNPC(event.getPlayer())){
             return;
         }
-        //as event fires even when player looks around, we'll cancel if they dont actually move
+        //as event fires even when player looks around, we'll cancel if they don't actually move
         if(event.getFrom().getBlockX() == event.getTo().getBlockX() && event.getFrom().getBlockZ() == event.getTo().getBlockZ() && event.getFrom().getBlockY() == event.getTo().getBlockY()){
             return;
         }
-        //if not yet cancelled we can start instantiating shit, i hope. Main concern is once server is heavily populated this event will be called A LOT. Need to keep it minimal.
-        //returning as soon as we realise we neednt compute any further.
+        //if not yet cancelled we can start instantiating shit, I hope. Main concern is once server is heavily populated this event will be called A LOT. Need to keep it minimal.
+        //returning as soon as we realise we needn't compute any further.
         Player player = event.getPlayer();
         Location to = event.getTo();
         if(!playersInLandmarks.isEmpty() && isPlayerInLandmark(player)){
@@ -49,7 +49,7 @@ public class PlayerListeners implements Listener {
                 playersInLandmarks.remove(player.getUniqueId());
             }
             return;
-        };
+        }
         //we can look into caching these values to reduce compute requirements of this block.
         Location from = event.getFrom();
         //we're now going to take their location data and check if any of the regions in our landmark manager contain either their to or from positions.
@@ -69,10 +69,7 @@ public class PlayerListeners implements Listener {
     }
 
     public boolean isPlayerInLandmark (Player player){
-        if(playersInLandmarks.containsKey(player.getUniqueId())){
-            return true;
-        }
-        return false;
+        return playersInLandmarks.containsKey(player.getUniqueId());
     }
     public Landmark getCurrentLandmark (Player player){
         return playersInLandmarks.get(player.getUniqueId());
@@ -83,14 +80,11 @@ public class PlayerListeners implements Listener {
             landmarksPlayer.add(landmark.getID());
             landmarksDiscovered.put(player.getUniqueId(),landmarksPlayer);
             player.sendMessage("You have discovered " + landmark.getTitle());
-        };
+        }
 
     }
 
     public boolean hasDiscovered(Player player, String landmarkID){
-        if(landmarksDiscovered.get(player.getUniqueId()).contains(landmarkID)){
-            return true;
-        }
-        return false;
+        return landmarksDiscovered.get(player.getUniqueId()).contains(landmarkID);
     }
 }

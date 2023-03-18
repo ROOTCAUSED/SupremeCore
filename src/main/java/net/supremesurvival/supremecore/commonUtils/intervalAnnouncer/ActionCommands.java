@@ -1,7 +1,6 @@
 package net.supremesurvival.supremecore.commonUtils.intervalAnnouncer;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.supremesurvival.supremecore.SupremeCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Instrument;
@@ -59,7 +58,7 @@ public class ActionCommands implements CommandExecutor {
                 this.sms(s, "&fSend an ActionBar message to a player");
                 this.sms(s, "&c/aa announce <display length> <message/index>");
                 this.sms(s, "&fSend an ActionBar message to all online players");
-                if (announcer.placeholderAPI) {
+                if (IntervalAnnouncer.placeholderAPI) {
                     this.sms(s, "&c/aa pannounce <player> <display time> <message/index>");
                     this.sms(s, "&fSend an ActionBar message to all online players with placeholders set to the player specified");
                 }
@@ -75,18 +74,18 @@ public class ActionCommands implements CommandExecutor {
                 this.sms(s, "&8&m-----------------------------------------------------");
                 return true;
             } else if (args[0].equalsIgnoreCase("stop")) {
-                if (announcer.iTask == null) {
+                if (IntervalAnnouncer.iTask == null) {
                     this.sms(s, "&cThere is no auto announcement currently running!");
                     return true;
                 } else {
-                    //Check this doesnt break shit
+                    //Check this doesn't break shit
                     this.announcer.stopAnnouncements();
                     Bukkit.getScheduler().cancelTasks(this.announcer.plugin);
                     this.sms(s, "&bAuto announcements have been stopped");
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("start")) {
-                if (announcer.iTask != null) {
+                if (IntervalAnnouncer.iTask != null) {
                     this.sms(s, "&cThe auto announcement is already running!");
                     return true;
                 } else {
@@ -97,12 +96,12 @@ public class ActionCommands implements CommandExecutor {
             } else {
                 int e;
                 if (args[0].equalsIgnoreCase("list")) {
-                    if (announcer.announcements != null && !announcer.announcements.isEmpty()) {
+                    if (IntervalAnnouncer.announcements != null && !IntervalAnnouncer.announcements.isEmpty()) {
                         this.sms(s, "&8&m-----------------------------------------------------");
-                        this.sms(s, "&bActive announcements: &f" + announcer.announcements.size());
+                        this.sms(s, "&bActive announcements: &f" + IntervalAnnouncer.announcements.size());
 
-                        for(e = 0; e < announcer.announcements.size(); ++e) {
-                            this.sms(s, e + "&7: &r" + (String)announcer.announcements.get(e));
+                        for(e = 0; e < IntervalAnnouncer.announcements.size(); ++e) {
+                            this.sms(s, e + "&7: &r" + IntervalAnnouncer.announcements.get(e));
                         }
 
                         this.sms(s, "&8&m-----------------------------------------------------");
@@ -138,8 +137,8 @@ public class ActionCommands implements CommandExecutor {
                                 this.sms(s, "&cMessage was invalid!");
                                 return true;
                             } else {
-                                announcer.announcements.add(msg);
-                                this.announcer.plugin.getConfig().set("announcements", announcer.announcements);
+                                IntervalAnnouncer.announcements.add(msg);
+                                this.announcer.plugin.getConfig().set("announcements", IntervalAnnouncer.announcements);
                                 this.sms(s, "&bMessage was successfully added!");
                                 this.announcer.plugin.saveConfig();
                                 return true;
@@ -151,7 +150,7 @@ public class ActionCommands implements CommandExecutor {
                                 if (!args[0].equalsIgnoreCase("pannounce") && !args[0].equalsIgnoreCase("pbroadcast")) {
                                     this.sms(s, "&cIncorrect usage!");
                                     return true;
-                                } else if (!announcer.placeholderAPI) {
+                                } else if (!IntervalAnnouncer.placeholderAPI) {
                                     this.sms(s, "&cThis command requires PlaceholderAPI integration to be used!");
                                     return true;
                                 } else if (args.length < 4) {
@@ -178,12 +177,12 @@ public class ActionCommands implements CommandExecutor {
                                             if (args.length == 4) {
                                                 if (this.isInt(args[3])) {
                                                     index = Integer.parseInt(args[3]);
-                                                    if (index < 0 || index >= announcer.announcements.size()) {
+                                                    if (index < 0 || index >= IntervalAnnouncer.announcements.size()) {
                                                         this.sms(s, "&cIncorrect entry! That entry did not exist!");
                                                         return true;
                                                     }
 
-                                                    msg = (String)announcer.announcements.get(index);
+                                                    msg = IntervalAnnouncer.announcements.get(index);
                                                 } else {
                                                     msg = args[3];
                                                 }
@@ -211,7 +210,7 @@ public class ActionCommands implements CommandExecutor {
 
                                                 for(var26 = Bukkit.getServer().getOnlinePlayers().iterator(); var26.hasNext(); ActionAPI.sendTimedPlayerAnnouncement(this.announcer.plugin, t, msg, time)) {
                                                     t = (Player)var26.next();
-                                                    if (!announcer.disableSounds && (stfu == null || !stfu.contains(t.getName()))) {
+                                                    if (!IntervalAnnouncer.disableSounds && (stfu == null || !stfu.contains(t.getName()))) {
                                                         t.playNote(t.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
                                                     }
                                                 }
@@ -242,12 +241,12 @@ public class ActionCommands implements CommandExecutor {
                                         if (args.length == 3) {
                                             if (this.isInt(args[2])) {
                                                 time = Integer.parseInt(args[2]);
-                                                if (time < 0 || time >= announcer.announcements.size()) {
+                                                if (time < 0 || time >= IntervalAnnouncer.announcements.size()) {
                                                     this.sms(s, "&cIncorrect entry! That entry did not exist!");
                                                     return true;
                                                 }
 
-                                                msg = (String)announcer.announcements.get(time);
+                                                msg = IntervalAnnouncer.announcements.get(time);
                                             } else {
                                                 msg = args[2];
                                             }
@@ -273,7 +272,7 @@ public class ActionCommands implements CommandExecutor {
                                         } else {
                                             for(Iterator var35 = Bukkit.getServer().getOnlinePlayers().iterator(); var35.hasNext(); ActionAPI.sendTimedPlayerAnnouncement(this.announcer.plugin, t, msg, time)) {
                                                 t = (Player)var35.next();
-                                                if (!announcer.disableSounds && (stfu == null || !stfu.contains(t.getName()))) {
+                                                if (!IntervalAnnouncer.disableSounds && (stfu == null || !stfu.contains(t.getName()))) {
                                                     t.playNote(t.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
                                                 }
                                             }
@@ -307,12 +306,12 @@ public class ActionCommands implements CommandExecutor {
                                         if (args.length == 4) {
                                             if (this.isInt(args[3])) {
                                                 index = Integer.parseInt(args[3]);
-                                                if (index < 0 || index >= announcer.announcements.size()) {
+                                                if (index < 0 || index >= IntervalAnnouncer.announcements.size()) {
                                                     this.sms(s, "&cIncorrect entry! That entry did not exist!");
                                                     return true;
                                                 }
 
-                                                msg = (String)announcer.announcements.get(index);
+                                                msg = IntervalAnnouncer.announcements.get(index);
                                             } else {
                                                 msg = args[3];
                                             }
@@ -336,7 +335,7 @@ public class ActionCommands implements CommandExecutor {
                                             this.sms(s, "&cMessage was invalid!");
                                             return true;
                                         } else {
-                                            if (!announcer.disableSounds && (stfu == null || !stfu.contains(target.getName()))) {
+                                            if (!IntervalAnnouncer.disableSounds && (stfu == null || !stfu.contains(target.getName()))) {
                                                 target.playNote(target.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
                                             }
 
@@ -430,7 +429,7 @@ public class ActionCommands implements CommandExecutor {
                 if (!target.hasPermission("actionannouncer.stop")) {
                     this.sms(target, "&cYou dont have permission to do that!");
                     return true;
-                } else if (announcer.iTask == null) {
+                } else if (IntervalAnnouncer.iTask == null) {
                     this.sms(target, "&cThere is no auto announcement currently running!");
                     return true;
                 } else {
@@ -442,7 +441,7 @@ public class ActionCommands implements CommandExecutor {
                 if (!target.hasPermission("actionannouncer.start")) {
                     this.sms(target, "&cYou dont have permission to do that!");
                     return true;
-                } else if (announcer.iTask != null) {
+                } else if (IntervalAnnouncer.iTask != null) {
                     this.sms(target, "&cThe auto announcement is already running!");
                     return true;
                 } else {
@@ -454,12 +453,12 @@ public class ActionCommands implements CommandExecutor {
                 if (!target.hasPermission("actionannouncer.list")) {
                     this.sms(target, "&cYou dont have permission to do that!");
                     return true;
-                } else if (announcer.announcements != null && !announcer.announcements.isEmpty()) {
+                } else if (IntervalAnnouncer.announcements != null && !IntervalAnnouncer.announcements.isEmpty()) {
                     this.sms(target, "&8&m-----------------------------------------------------");
-                    this.sms(target, "&bActive announcements: &f" + announcer.announcements.size());
+                    this.sms(target, "&bActive announcements: &f" + IntervalAnnouncer.announcements.size());
 
-                    for(time = 0; time < announcer.announcements.size(); ++time) {
-                        this.sms(s, time + "&7: &r" + (String)announcer.announcements.get(time));
+                    for(time = 0; time < IntervalAnnouncer.announcements.size(); ++time) {
+                        this.sms(s, time + "&7: &r" + IntervalAnnouncer.announcements.get(time));
                     }
 
                     this.sms(target, "&8&m-----------------------------------------------------");
@@ -481,7 +480,7 @@ public class ActionCommands implements CommandExecutor {
                                 } else if (!target.hasPermission("actionannouncer.pannounce")) {
                                     this.sms(target, "&cYou dont have permission to do that!");
                                     return true;
-                                } else if (!announcer.placeholderAPI) {
+                                } else if (!IntervalAnnouncer.placeholderAPI) {
                                     this.sms(target, "&cThis command requires PlaceholderAPI integration to be used!");
                                     return true;
                                 } else if (args.length < 4) {
@@ -508,12 +507,12 @@ public class ActionCommands implements CommandExecutor {
                                             if (args.length == 4) {
                                                 if (this.isInt(args[3])) {
                                                     index = Integer.parseInt(args[3]);
-                                                    if (index < 0 || index >= announcer.announcements.size()) {
+                                                    if (index < 0 || index >= IntervalAnnouncer.announcements.size()) {
                                                         this.sms(s, "&cIncorrect entry! That entry did not exist!");
                                                         return true;
                                                     }
 
-                                                    msg = (String)announcer.announcements.get(index);
+                                                    msg = IntervalAnnouncer.announcements.get(index);
                                                 } else {
                                                     msg = args[3];
                                                 }
@@ -540,7 +539,7 @@ public class ActionCommands implements CommandExecutor {
                                                 msg = PlaceholderAPI.setPlaceholders(target, msg);
                                                 for(Iterator var32 = Bukkit.getServer().getOnlinePlayers().iterator(); var32.hasNext(); ActionAPI.sendTimedPlayerAnnouncement(this.announcer.plugin, t, msg, time)) {
                                                     t = (Player)var32.next();
-                                                    if (!announcer.disableSounds && (stfu == null || !stfu.contains(t.getName()))) {
+                                                    if (!IntervalAnnouncer.disableSounds && (stfu == null || !stfu.contains(t.getName()))) {
                                                         t.playNote(t.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
                                                     }
                                                 }
@@ -574,12 +573,12 @@ public class ActionCommands implements CommandExecutor {
                                         if (args.length == 3) {
                                             if (this.isInt(args[2])) {
                                                 index = Integer.parseInt(args[2]);
-                                                if (index < 0 || index >= announcer.announcements.size()) {
+                                                if (index < 0 || index >= IntervalAnnouncer.announcements.size()) {
                                                     this.sms(s, "&cIncorrect entry! That entry did not exist!");
                                                     return true;
                                                 }
 
-                                                msg = (String)announcer.announcements.get(index);
+                                                msg = IntervalAnnouncer.announcements.get(index);
                                             } else {
                                                 msg = args[2];
                                             }
@@ -605,7 +604,7 @@ public class ActionCommands implements CommandExecutor {
                                         } else {
                                             for(var26 = Bukkit.getServer().getOnlinePlayers().iterator(); var26.hasNext(); ActionAPI.sendTimedPlayerAnnouncement(this.announcer.plugin, t, msg, time)) {
                                                 t = (Player)var26.next();
-                                                if (!announcer.disableSounds && (stfu == null || !stfu.contains(t.getName()))) {
+                                                if (!IntervalAnnouncer.disableSounds && (stfu == null || !stfu.contains(t.getName()))) {
                                                     t.playNote(t.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
                                                 }
                                             }
@@ -642,12 +641,12 @@ public class ActionCommands implements CommandExecutor {
                                         if (args.length == 4) {
                                             if (this.isInt(args[3])) {
                                                 index = Integer.parseInt(args[3]);
-                                                if (index < 0 || index >= announcer.announcements.size()) {
+                                                if (index < 0 || index >= IntervalAnnouncer.announcements.size()) {
                                                     this.sms(s, "&cIncorrect entry! That entry did not exist!");
                                                     return true;
                                                 }
 
-                                                msg = (String)announcer.announcements.get(index);
+                                                msg = IntervalAnnouncer.announcements.get(index);
                                             } else {
                                                 msg = args[3];
                                             }
@@ -671,7 +670,7 @@ public class ActionCommands implements CommandExecutor {
                                             this.sms(s, "&cMessage was invalid!");
                                             return true;
                                         } else {
-                                            if (!announcer.disableSounds && (stfu == null || !stfu.contains(t.getName()))) {
+                                            if (!IntervalAnnouncer.disableSounds && (stfu == null || !stfu.contains(t.getName()))) {
                                                 t.playNote(t.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
                                             }
 
@@ -683,7 +682,7 @@ public class ActionCommands implements CommandExecutor {
                                 }
                             }
                         }
-                    } else if (announcer.disableSounds) {
+                    } else if (IntervalAnnouncer.disableSounds) {
                         return true;
                     } else {
                         if (stfu == null) {
@@ -693,11 +692,11 @@ public class ActionCommands implements CommandExecutor {
                         if (stfu.contains(target.getName())) {
                             stfu.remove(target.getName());
                             target.playNote(target.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
-                            announcer.sendAnnouncement(target, "&bActionbar sounds &aEnabled&b!!");
+                            IntervalAnnouncer.sendAnnouncement(target, "&bActionbar sounds &aEnabled&b!!");
                             return true;
                         } else {
                             stfu.add(target.getName());
-                            announcer.sendAnnouncement(target, "&bActionbar sounds &7Disabled&b!");
+                            IntervalAnnouncer.sendAnnouncement(target, "&bActionbar sounds &7Disabled&b!");
                             return true;
                         }
                     }
@@ -717,9 +716,9 @@ public class ActionCommands implements CommandExecutor {
                         return true;
                     }
 
-                    if (time >= 0 && time < announcer.announcements.size()) {
-                        announcer.announcements.remove(time);
-                        this.announcer.plugin.getConfig().set("announcements", announcer.announcements);
+                    if (time >= 0 && time < IntervalAnnouncer.announcements.size()) {
+                        IntervalAnnouncer.announcements.remove(time);
+                        this.announcer.plugin.getConfig().set("announcements", IntervalAnnouncer.announcements);
                         this.announcer.plugin.saveConfig();
                         this.sms(s, "&aMessage was successfully removed!");
                         return true;
@@ -754,8 +753,8 @@ public class ActionCommands implements CommandExecutor {
                     this.sms(s, "&cMessage was invalid!");
                     return true;
                 } else {
-                    announcer.announcements.add(msg);
-                    this.announcer.plugin.getConfig().set("announcements", announcer.announcements);
+                    IntervalAnnouncer.announcements.add(msg);
+                    this.announcer.plugin.getConfig().set("announcements", IntervalAnnouncer.announcements);
                     this.sms(s, "&bMessage was successfully added!");
                     this.announcer.plugin.saveConfig();
                     return true;

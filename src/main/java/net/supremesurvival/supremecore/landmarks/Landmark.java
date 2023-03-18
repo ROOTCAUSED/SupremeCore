@@ -6,7 +6,7 @@ public class Landmark {
     private ProtectedRegion region;
     private String name;
     private String announcement;
-    private String id;
+    private final String id;
     public Landmark(LandmarkType type, ProtectedRegion region, String name, String announcement, String id ){
         this.type = type;
         this.name = name;

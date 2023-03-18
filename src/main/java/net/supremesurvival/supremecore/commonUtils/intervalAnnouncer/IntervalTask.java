@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import java.util.Random;
 
 public class IntervalTask implements Runnable {
-    private IntervalAnnouncer announcer;
+    private final IntervalAnnouncer announcer;
 
     public IntervalTask(IntervalAnnouncer instance) {
         this.announcer = instance;
@@ -21,13 +21,13 @@ public class IntervalTask implements Runnable {
                 }
 
                 IntervalAnnouncer.rLast = s;
-                send = (String)IntervalAnnouncer.announcements.get(s);
+                send = IntervalAnnouncer.announcements.get(s);
             } else if (IntervalAnnouncer.count < IntervalAnnouncer.announcements.size()) {
                 ++IntervalAnnouncer.count;
-                send = (String)IntervalAnnouncer.announcements.get(IntervalAnnouncer.count - 1);
+                send = IntervalAnnouncer.announcements.get(IntervalAnnouncer.count - 1);
             } else {
                 IntervalAnnouncer.count = 0;
-                send = (String)IntervalAnnouncer.announcements.get(0);
+                send = IntervalAnnouncer.announcements.get(0);
             }
 
             Bukkit.getServer().getScheduler().runTask(this.announcer.plugin, new AnnounceTask(this.announcer, send));

@@ -7,19 +7,11 @@ public class Logger {
 
     }
     public static void sendMessage(String message, LogType logType, String handle){
-        switch (logType){
-            case ERR:
-                sendErrLog(message);
-                break;
-            case INFO:
-                sendInfoLog(message, handle);
-                break;
-            case CRIT:
-                sendCritLog(message);
-                break;
-            case WARN:
-                sendWarnLog(message);
-                break;
+        switch (logType) {
+            case ERR -> sendErrLog(message);
+            case INFO -> sendInfoLog(message, handle);
+            case CRIT -> sendCritLog(message);
+            case WARN -> sendWarnLog(message);
         }
     }
     private static void sendErrLog(String message){
@@ -34,7 +26,7 @@ public class Logger {
     private static void sendWarnLog(String message){
 
     }
-    public static enum LogType{
+    public enum LogType{
         INFO,
         WARN,
         ERR,

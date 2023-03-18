@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
 
 public class VoteEvent implements Listener {
 
-    private VoteTime voteTime;
+    private final VoteTime voteTime;
     public VoteEvent(VoteTime voteTime) {
         this.voteTime = voteTime;
     }
