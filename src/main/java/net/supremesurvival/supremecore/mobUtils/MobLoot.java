@@ -17,7 +17,7 @@ public class MobLoot implements Listener {
 public ItemStack item;
 public Material loot;
     @EventHandler
-    public boolean mobDeath(EntityDeathEvent event){
+    public void mobDeath(EntityDeathEvent event){
         //this checks all mob deaths (not just those killed by players) by design, this is to prevent natural death mob farms.
         LivingEntity entity = event.getEntity();
         if (entity instanceof PigZombie) {
@@ -25,7 +25,7 @@ public Material loot;
         }
         if (entity instanceof Drowned){
             checkLoot(event);
-        }return true;
+        }
     }
     public void checkLoot(EntityDeathEvent event){
         Iterator<ItemStack> iter = event.getDrops().iterator();
@@ -36,9 +36,5 @@ public Material loot;
                 iter.remove();
             }
             }
-        if(event.getEntity().getKiller() instanceof Player){
-            Player player = event.getEntity().getKiller();
-
-        }
     }
 }

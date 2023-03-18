@@ -31,7 +31,7 @@ public class SupremePlaceholder {
     }
     public static void register(){
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI")!= null){
-            new MoralityPlaceholderExpansion(pl).register();
+            new MoralityPlaceholderExpansion().register();
         }
     }
 

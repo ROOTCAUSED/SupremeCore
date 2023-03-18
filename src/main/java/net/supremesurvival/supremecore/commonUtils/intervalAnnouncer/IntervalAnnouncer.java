@@ -69,15 +69,12 @@ public class IntervalAnnouncer implements Listener {
     }
 
     protected void startAnnouncements() {
-        if (iTask == null) {
-            iTask = this.plugin.getServer().getScheduler().runTaskTimerAsynchronously(this.plugin, new IntervalTask(this), 1L, 20L * (long)announceInterval);
-            Bukkit.getConsoleSender().sendMessage("started announcements");
-        } else {
+        if (iTask != null) {
             iTask.cancel();
             iTask = null;
-            iTask = this.plugin.getServer().getScheduler().runTaskTimerAsynchronously(this.plugin, new IntervalTask(this), 1L, 20L * (long)announceInterval);
-            Bukkit.getConsoleSender().sendMessage("started announcements");
         }
+        iTask = this.plugin.getServer().getScheduler().runTaskTimerAsynchronously(this.plugin, new IntervalTask(this), 1L, 20L * (long)announceInterval);
+        Bukkit.getConsoleSender().sendMessage("started announcements");
 
     }
 

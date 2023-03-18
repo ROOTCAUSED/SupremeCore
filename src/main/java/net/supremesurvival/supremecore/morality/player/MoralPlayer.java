@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 public class MoralPlayer {
-    UUID uuid;
+    final UUID uuid;
     Integer morality;
     MoralStanding moralStanding;
 

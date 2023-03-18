@@ -15,7 +15,7 @@ import java.util.List;
 //be written by a player and have limited use) which are filled from a config.yml file.
 //We can use this feature to add rich ingame lore via a library of books being added to the loot tables of the game.
 public class Tome {
-    ItemStack tome = new ItemStack(Material.WRITTEN_BOOK);
+    final ItemStack tome = new ItemStack(Material.WRITTEN_BOOK);
     BookMeta tomeMeta = (BookMeta)tome.getItemMeta();
 
     final static String handle = "Tome";
@@ -29,6 +29,7 @@ public class Tome {
         Iterator newLoreIterator = lore.iterator();
         List<String> tempLore = new ArrayList<String>();
         if(tomeMeta.hasLore()){
+            //getlore is deprecated, will need to replace with .lore, this returns a list of components not a list of strings so will need to investigate the implications.
             tempLore = tomeMeta.getLore();
             while(newLoreIterator.hasNext()){
                 String formatted = ChatColor.translateAlternateColorCodes('&',(String)newLoreIterator.next());
@@ -50,9 +51,8 @@ public class Tome {
         return this.tomeMeta.getTitle();
     }
     public String coverPage(String preamble){
-        String page = "\n\n" + tomeMeta.getTitle()+"\n\n"+preamble+"\n\n"+"By"+"\n\n"+tomeMeta.getAuthor();
 
-        return page;
+        return "\n\n" + tomeMeta.getTitle()+"\n\n"+preamble+"\n\n"+"By"+"\n\n"+tomeMeta.getAuthor();
     }
     //compiles a longer string into short 250 character strings, and then further splits the end of that string to ensure that
     //pages do not carry over (as that looks crap). New line characters mess up automatic formatting of book pages
@@ -81,8 +81,7 @@ public class Tome {
     }
     //hacky fix but it works. Will revisit this
     public String replaceNewLines(String message){
-        String tmpString = message.replace("\n", "");
-        return tmpString;
+        return message.replace("\n", "");
     }
     //Used to add all preprocessed pages to book entity
     public void addPages(List<String> pages){

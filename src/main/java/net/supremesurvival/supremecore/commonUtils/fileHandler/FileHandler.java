@@ -20,16 +20,15 @@ public class FileHandler {
         return dataFile;
     }
 
-    public static HashMap loadMoralityData(UUID player, HashMap hashMap, File file){
-        UUID retrieveUUID = player;
+    public static HashMap <UUID, MoralPlayer> loadMoralityData(UUID player, HashMap<UUID, MoralPlayer> hashMap, File file){
         try (BufferedReader reader = new BufferedReader(new FileReader(file))){
             String line;
             while ((line=reader.readLine())!=null){
                 String[] parts = line.split(":");
                 UUID playerUUID = UUID.fromString(parts[0]);
-                if (playerUUID.equals(retrieveUUID)){
+                if (playerUUID.equals(player)){
                     String data = parts[1];
-                    Integer dataInt = Integer.valueOf(data);
+                    int dataInt = Integer.parseInt(data);
                     MoralPlayer moralPlayer = new MoralPlayer(playerUUID, dataInt);
                     hashMap.put(playerUUID,moralPlayer);
                     Logger.sendMessage("Loaded Single Data for " + playerUUID + " into Hashmap", Logger.LogType.INFO, handle);
@@ -44,14 +43,14 @@ public class FileHandler {
         return null;
     }
 
-    public static HashMap loadAllMoralityData(File file, HashMap hashmap){
+    public static HashMap <UUID, MoralPlayer> loadAllMoralityData(File file, HashMap <UUID, MoralPlayer> hashmap){
         try (BufferedReader reader = new BufferedReader(new FileReader(file))){
             String line;
             while ((line=reader.readLine())!=null){
                 String[] parts = line.split(":");
                 UUID playerUUID = UUID.fromString(parts[0]);
                 String data = parts [1];
-                Integer dataInt = Integer.valueOf(data);
+                int dataInt = Integer.parseInt(data);
                 MoralPlayer moralPlayer = new MoralPlayer(playerUUID, dataInt);
                 hashmap.put(playerUUID, moralPlayer);
             }

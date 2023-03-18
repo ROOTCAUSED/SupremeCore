@@ -20,9 +20,11 @@ public class Logger {
     private static void sendInfoLog(String message, String handle){
         Bukkit.getConsoleSender().sendMessage("["+handle+"][INFO][+]"+message);
     }
+    @SuppressWarnings("EmptyMethod")
     private static void sendCritLog(String message){
 
     }
+    @SuppressWarnings("EmptyMethod")
     private static void sendWarnLog(String message){
 
     }

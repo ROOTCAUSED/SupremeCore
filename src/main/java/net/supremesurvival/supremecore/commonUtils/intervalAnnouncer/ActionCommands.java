@@ -76,23 +76,21 @@ public class ActionCommands implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("stop")) {
                 if (IntervalAnnouncer.iTask == null) {
                     this.sms(s, "&cThere is no auto announcement currently running!");
-                    return true;
                 } else {
                     //Check this doesn't break shit
                     this.announcer.stopAnnouncements();
                     Bukkit.getScheduler().cancelTasks(this.announcer.plugin);
                     this.sms(s, "&bAuto announcements have been stopped");
-                    return true;
                 }
+                return true;
             } else if (args[0].equalsIgnoreCase("start")) {
                 if (IntervalAnnouncer.iTask != null) {
                     this.sms(s, "&cThe auto announcement is already running!");
-                    return true;
                 } else {
                     this.announcer.startAnnouncements();
                     this.sms(s, "&bAuto announcements have been started");
-                    return true;
                 }
+                return true;
             } else {
                 int e;
                 if (args[0].equalsIgnoreCase("list")) {
@@ -104,14 +102,12 @@ public class ActionCommands implements CommandExecutor {
                             this.sms(s, e + "&7: &r" + IntervalAnnouncer.announcements.get(e));
                         }
 
-                        this.sms(s, "&8&m-----------------------------------------------------");
-                        return true;
                     } else {
                         this.sms(s, "&8&m-----------------------------------------------------");
                         this.sms(s, "&cThere are no active announcements!");
-                        this.sms(s, "&8&m-----------------------------------------------------");
-                        return true;
                     }
+                    this.sms(s, "&8&m-----------------------------------------------------");
+                    return true;
                 } else {
                     if (args[0].equalsIgnoreCase("add")) {
                         if (args.length < 2) {
@@ -135,14 +131,13 @@ public class ActionCommands implements CommandExecutor {
 
                             if (msg == null) {
                                 this.sms(s, "&cMessage was invalid!");
-                                return true;
                             } else {
                                 IntervalAnnouncer.announcements.add(msg);
                                 this.announcer.plugin.getConfig().set("announcements", IntervalAnnouncer.announcements);
                                 this.sms(s, "&bMessage was successfully added!");
                                 this.announcer.plugin.saveConfig();
-                                return true;
                             }
+                            return true;
                         }
                     } else if (!args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("delete")) {
                         if (!args[0].equalsIgnoreCase("send") && !args[0].equalsIgnoreCase("msg")) {
@@ -204,7 +199,6 @@ public class ActionCommands implements CommandExecutor {
 
                                             if (msg == null) {
                                                 this.sms(s, "&cMessage was invalid!");
-                                                return true;
                                             } else {
                                                 msg = PlaceholderAPI.setPlaceholders(target, msg);
 
@@ -216,8 +210,8 @@ public class ActionCommands implements CommandExecutor {
                                                 }
 
                                                 this.sms(s, "&bPlayer specific announcement sent!");
-                                                return true;
                                             }
+                                            return true;
                                         }
                                     }
                                 }
@@ -268,7 +262,6 @@ public class ActionCommands implements CommandExecutor {
 
                                         if (msg == null) {
                                             this.sms(s, "&cMessage was invalid!");
-                                            return true;
                                         } else {
                                             for(Iterator var35 = Bukkit.getServer().getOnlinePlayers().iterator(); var35.hasNext(); ActionAPI.sendTimedPlayerAnnouncement(this.announcer.plugin, t, msg, time)) {
                                                 t = (Player)var35.next();
@@ -278,8 +271,8 @@ public class ActionCommands implements CommandExecutor {
                                             }
 
                                             this.sms(s, "&bAnnouncement sent!");
-                                            return true;
                                         }
+                                        return true;
                                     }
                                 }
                             }
@@ -333,7 +326,6 @@ public class ActionCommands implements CommandExecutor {
 
                                         if (msg == null) {
                                             this.sms(s, "&cMessage was invalid!");
-                                            return true;
                                         } else {
                                             if (!IntervalAnnouncer.disableSounds && (stfu == null || !stfu.contains(target.getName()))) {
                                                 target.playNote(target.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
@@ -341,8 +333,8 @@ public class ActionCommands implements CommandExecutor {
 
                                             ActionAPI.sendTimedPlayerAnnouncement(this.announcer.plugin, target, msg, index);
                                             this.sms(s, "&bMessage sent to &f" + target.getName());
-                                            return true;
                                         }
+                                        return true;
                                     }
                                 }
                             }
@@ -365,11 +357,10 @@ public class ActionCommands implements CommandExecutor {
                             this.announcer.plugin.getConfig().set("announcements", IntervalAnnouncer.announcements);
                             this.announcer.plugin.saveConfig();
                             this.sms(s, "&bMessage was successfully removed!");
-                            return true;
                         } else {
                             this.sms(s, "&cIncorrect entry! That entry did not exist!");
-                            return true;
                         }
+                        return true;
                     }
                 }
             }
@@ -534,7 +525,6 @@ public class ActionCommands implements CommandExecutor {
 
                                             if (msg == null) {
                                                 this.sms(s, "&cMessage was invalid!");
-                                                return true;
                                             } else {
                                                 msg = PlaceholderAPI.setPlaceholders(target, msg);
                                                 for(Iterator var32 = Bukkit.getServer().getOnlinePlayers().iterator(); var32.hasNext(); ActionAPI.sendTimedPlayerAnnouncement(this.announcer.plugin, t, msg, time)) {
@@ -545,8 +535,8 @@ public class ActionCommands implements CommandExecutor {
                                                 }
 
                                                 this.sms(s, "&bPlayer specific announcement sent!");
-                                                return true;
                                             }
+                                            return true;
                                         }
                                     }
                                 }
@@ -600,7 +590,6 @@ public class ActionCommands implements CommandExecutor {
 
                                         if (msg == null) {
                                             this.sms(s, "&cMessage was invalid!");
-                                            return true;
                                         } else {
                                             for(var26 = Bukkit.getServer().getOnlinePlayers().iterator(); var26.hasNext(); ActionAPI.sendTimedPlayerAnnouncement(this.announcer.plugin, t, msg, time)) {
                                                 t = (Player)var26.next();
@@ -610,8 +599,8 @@ public class ActionCommands implements CommandExecutor {
                                             }
 
                                             this.sms(s, "&bAnnouncement sent!");
-                                            return true;
                                         }
+                                        return true;
                                     }
                                 }
                             }
@@ -668,7 +657,6 @@ public class ActionCommands implements CommandExecutor {
 
                                         if (msg == null) {
                                             this.sms(s, "&cMessage was invalid!");
-                                            return true;
                                         } else {
                                             if (!IntervalAnnouncer.disableSounds && (stfu == null || !stfu.contains(t.getName()))) {
                                                 t.playNote(t.getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.C));
@@ -676,8 +664,8 @@ public class ActionCommands implements CommandExecutor {
 
                                             ActionAPI.sendTimedPlayerAnnouncement(this.announcer.plugin, t, msg, index);
                                             this.sms(s, "&bMessage sent to &f" + t.getName());
-                                            return true;
                                         }
+                                        return true;
                                     }
                                 }
                             }
@@ -721,11 +709,10 @@ public class ActionCommands implements CommandExecutor {
                         this.announcer.plugin.getConfig().set("announcements", IntervalAnnouncer.announcements);
                         this.announcer.plugin.saveConfig();
                         this.sms(s, "&aMessage was successfully removed!");
-                        return true;
                     } else {
                         this.sms(s, "&cIncorrect entry! That entry did not exist!");
-                        return true;
                     }
+                    return true;
                 }
             } else if (!target.hasPermission("actionannouncer.add")) {
                 this.sms(target, "&cYou dont have permission to do that!");
@@ -751,14 +738,13 @@ public class ActionCommands implements CommandExecutor {
 
                 if (msg == null) {
                     this.sms(s, "&cMessage was invalid!");
-                    return true;
                 } else {
                     IntervalAnnouncer.announcements.add(msg);
                     this.announcer.plugin.getConfig().set("announcements", IntervalAnnouncer.announcements);
                     this.sms(s, "&bMessage was successfully added!");
                     this.announcer.plugin.saveConfig();
-                    return true;
                 }
+                return true;
             }
         }
     }

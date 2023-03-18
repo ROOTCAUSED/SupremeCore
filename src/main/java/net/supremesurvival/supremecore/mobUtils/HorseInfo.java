@@ -10,31 +10,27 @@ import java.text.DecimalFormat;
 //This is a crude class to return horse info to a player who runs the command from horseback.
 //At some point this will be expanded with features reverse engineered from the RPGHorses library, however for now it serves its purpose.
 public class HorseInfo implements CommandExecutor {
-    private LivingEntity PlayerMount;
-    private AbstractHorse PlayerHorse;
-    private double movementSpeed = 1.0, jumpStrength = 1.0, health = 1.0, maxhealth = 1.0;
-    private String name = "";
-    private String OwnerName;
-    DecimalFormat df = new DecimalFormat("###.###");
+    final DecimalFormat df = new DecimalFormat("###.###");
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player player) {
             if (player.isInsideVehicle()) {
                 if (player.getVehicle() instanceof Horse) {
-                    this.PlayerMount = (LivingEntity) player.getVehicle();
-                    this.PlayerHorse = (AbstractHorse) PlayerMount;
-                    this.name = PlayerHorse.getName();
-                    this.movementSpeed = PlayerHorse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
-                    this.health = PlayerHorse.getHealth();
-                    if (PlayerHorse.getOwner() != null){
-                        this.OwnerName = PlayerHorse.getOwner().getName();
+                    LivingEntity playerMount = (LivingEntity) player.getVehicle();
+                    AbstractHorse playerHorse = (AbstractHorse) playerMount;
+                    String name = playerHorse.getName();
+                    double movementSpeed = playerHorse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
+                    double health = playerHorse.getHealth();
+                    String ownerName;
+                    if (playerHorse.getOwner() != null){
+                        ownerName = playerHorse.getOwner().getName();
                     }else{
-                        this.OwnerName = "Nobody";
+                        ownerName = "Nobody";
                     }
-                    this.maxhealth = PlayerHorse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
-                    this.jumpStrength = PlayerHorse.getJumpStrength();
-                    PlayerHorse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
-                    player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GOLD + "--------------" + ChatColor.GRAY +"]" + ChatColor.YELLOW + "\nHorse Name: " + ChatColor.GRAY + this.name + ChatColor.YELLOW + "\nJump Strength: " + ChatColor.GRAY + df.format(this.jumpStrength) + ChatColor.YELLOW +  "\nSpeed: " + ChatColor.GRAY + df.format(this.movementSpeed) + ChatColor.YELLOW +  "\nHealth: " + ChatColor.GRAY + df.format(this.health) + "/"+ this.maxhealth + ChatColor.GRAY + ChatColor.YELLOW + "\nTamed by: " + ChatColor.GRAY + this.OwnerName + "\n[" + ChatColor.GOLD + "--------------" + ChatColor.GRAY +"]");
+                    double maxhealth = playerHorse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+                    double jumpStrength = playerHorse.getJumpStrength();
+                    playerHorse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+                    player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GOLD + "--------------" + ChatColor.GRAY +"]" + ChatColor.YELLOW + "\nHorse Name: " + ChatColor.GRAY + name + ChatColor.YELLOW + "\nJump Strength: " + ChatColor.GRAY + df.format(jumpStrength) + ChatColor.YELLOW +  "\nSpeed: " + ChatColor.GRAY + df.format(movementSpeed) + ChatColor.YELLOW +  "\nHealth: " + ChatColor.GRAY + df.format(health) + "/"+ maxhealth + ChatColor.GRAY + ChatColor.YELLOW + "\nTamed by: " + ChatColor.GRAY + ownerName + "\n[" + ChatColor.GOLD + "--------------" + ChatColor.GRAY +"]");
                     return true;
                 }else {
                     player.sendMessage(ChatColor.GOLD + "[SupremeCore]" + ChatColor.GRAY + ":" + ChatColor.RED + "You must be riding a Horse to use this command.");

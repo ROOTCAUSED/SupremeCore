@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ConfigUtility {
     static SupremeCore plugin;
     static String module;
-    static ArrayList<String> moduleList = new ArrayList();
+    static ArrayList<String> moduleList = new ArrayList<>();
 
     final static String handle = "Config Utility";
     public ConfigUtility(SupremeCore plugin){
