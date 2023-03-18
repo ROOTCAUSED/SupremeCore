@@ -1,4 +1,4 @@
-package net.supremesurvival.supremecore.commonUtils.landmarks;
+package net.supremesurvival.supremecore.landmarks;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Iterator;
 import java.util.List;
 
-import static net.supremesurvival.supremecore.commonUtils.landmarks.PlayerListeners.landmarksDiscovered;
+import static net.supremesurvival.supremecore.landmarks.PlayerListeners.landmarksDiscovered;
 
 public class LandmarkCommand implements CommandExecutor {
 

@@ -1,4 +1,4 @@
-package net.supremesurvival.supremecore.commonUtils.morality.player;
+package net.supremesurvival.supremecore.morality.player;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

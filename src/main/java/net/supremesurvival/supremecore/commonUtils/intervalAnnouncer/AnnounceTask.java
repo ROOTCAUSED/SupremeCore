@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 public class AnnounceTask implements Runnable {
     private IntervalAnnouncer announcer;
     private final String msg;
-
+    final static String handle = "Announcer";
     public AnnounceTask(IntervalAnnouncer instance, String msg) {
         this.announcer = instance;
         this.msg = msg;
@@ -24,7 +24,7 @@ public class AnnounceTask implements Runnable {
             try {
                 (new PlayerMsgTask(p, this.msg, l)).runTaskTimer(this.announcer.plugin, 1L, 10L);
             } catch (IllegalStateException | IllegalArgumentException exception) {
-                Logger.sendMessage(exception.toString(), Logger.LogType.ERR, "Announcer");
+                Logger.sendMessage(exception.toString(), Logger.LogType.ERR, handle);
             }
         }
 

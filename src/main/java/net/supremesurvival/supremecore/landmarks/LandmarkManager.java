@@ -1,28 +1,22 @@
-package net.supremesurvival.supremecore.commonUtils.landmarks;
+package net.supremesurvival.supremecore.landmarks;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
+import net.supremesurvival.supremecore.commonUtils.fileHandler.ConfigUtility;
 import net.supremesurvival.supremecore.commonUtils.Logger;
 import net.supremesurvival.supremecore.commonUtils.fileHandler.FileHandler;
-import net.supremesurvival.supremecore.commonUtils.morality.player.MoralPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.io.*;
 import java.util.*;
 
-import static net.supremesurvival.supremecore.commonUtils.landmarks.PlayerListeners.landmarksDiscovered;
+import static net.supremesurvival.supremecore.landmarks.PlayerListeners.landmarksDiscovered;
 
 
 public class LandmarkManager {
@@ -31,7 +25,7 @@ public class LandmarkManager {
     public static Landmark landmark;
 
     private static Plugin plugin;
-
+    final static String handle = "Landmark Manager";
     private static File dataFile;
     public static void enable(){
         FileConfiguration config = ConfigUtility.getModuleConfig("Landmarks");
@@ -60,6 +54,7 @@ public class LandmarkManager {
         try (BufferedReader reader = new BufferedReader(new FileReader(dataFile))){
             String line;
             while ((line=reader.readLine())!=null){
+                if(line.trim().isEmpty()) continue; // Skip empty lines
                 String[] parts = line.split(":");
                 UUID playerUUID = UUID.fromString(parts[0]);
                 String[] landmarkIDs = parts[1].split(";");
@@ -68,14 +63,14 @@ public class LandmarkManager {
                     landmarks.add(landmarkID);
                 }
                 landmarksDiscovered.put(playerUUID,landmarks);
-                Logger.sendMessage("Loaded landmark data for " + playerUUID.toString() + " into LandmarksDiscovered Hashmap", Logger.LogType.INFO, "[Landmark Manager]");
+                Logger.sendMessage("Loaded landmark data for " + playerUUID.toString() + " into LandmarksDiscovered Hashmap", Logger.LogType.INFO, handle);
                 for (String s : landmarks) {
-                    Logger.sendMessage(s.toString(), Logger.LogType.INFO, "LandmarkManager");
+                    Logger.sendMessage(s.toString(), Logger.LogType.INFO, handle);
                 }
             }
         }
         catch (IOException e){
-            Logger.sendMessage(e.getMessage(), Logger.LogType.ERR, "Landmarks");
+            Logger.sendMessage(e.getMessage(), Logger.LogType.ERR, handle);
         }
     }
 
@@ -87,6 +82,7 @@ public class LandmarkManager {
             for (Map.Entry<UUID, List<String>> entry : landmarksDiscovered.entrySet()){
                 UUID playerID = entry.getKey();
                 List <String> landmarks = entry.getValue();
+                if (landmarks.isEmpty()) continue; // Skip players with no landmarks
                 writer.write(playerID.toString() + ":");
                 for(String landmark : landmarks){
                     writer.write(landmark + ";");
@@ -95,7 +91,7 @@ public class LandmarkManager {
             }
         }
         catch (IOException e) {
-            Logger.sendMessage(e.toString(), Logger.LogType.ERR, "[Landmarks]");
+            Logger.sendMessage(e.toString(), Logger.LogType.ERR, handle);
         }
     }
 

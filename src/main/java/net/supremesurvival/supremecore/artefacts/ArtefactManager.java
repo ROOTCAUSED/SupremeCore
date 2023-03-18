@@ -1,14 +1,12 @@
-package net.supremesurvival.supremecore.commonUtils.artefacts;
+package net.supremesurvival.supremecore.artefacts;
 
-import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
+import net.supremesurvival.supremecore.commonUtils.fileHandler.ConfigUtility;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ArtefactManager {

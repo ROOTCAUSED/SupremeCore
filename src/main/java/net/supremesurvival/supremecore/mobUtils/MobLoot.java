@@ -29,7 +29,7 @@ public Material loot;
             checkLoot(event);
         }return true;
     }
-    public boolean checkLoot(EntityDeathEvent event){
+    public void checkLoot(EntityDeathEvent event){
         Iterator<ItemStack> iter = event.getDrops().iterator();
         while (iter.hasNext()){
             item = iter.next();
@@ -42,6 +42,6 @@ public Material loot;
             Player player = event.getEntity().getKiller();
 
         }
-        return true;
+        return;
     }
 }

@@ -1,14 +1,5 @@
-package net.supremesurvival.supremecore.commonUtils.landmarks;
-
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.regions.Region;
-import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.protection.managers.RegionManager;
+package net.supremesurvival.supremecore.landmarks;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import com.sk89q.worldguard.protection.regions.RegionContainer;
-import net.supremesurvival.supremecore.SupremeCore;
-import net.supremesurvival.supremecore.commonUtils.Logger;
-import org.bukkit.Location;
 
 public class Landmark {
     private LandmarkType type;
@@ -17,7 +8,6 @@ public class Landmark {
     private String announcement;
     private String id;
     public Landmark(LandmarkType type, ProtectedRegion region, String name, String announcement, String id ){
-        Logger.sendMessage("Registering Landmark: " + name + " " + id, Logger.LogType.INFO, "[Landmarks]" );
         this.type = type;
         this.name = name;
         this.id = id;

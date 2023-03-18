@@ -1,17 +1,15 @@
-package net.supremesurvival.supremecore.commonUtils.tomes;
+package net.supremesurvival.supremecore.artefacts;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 
-public class TomesCommand implements CommandExecutor {
-
+public class ArtefactsCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player){
@@ -21,15 +19,15 @@ public class TomesCommand implements CommandExecutor {
 
             } else if(args.length == 1){
                 if(args[0].equalsIgnoreCase("retrieve")){
-                    if(player.hasPermission("tomes.retrieve")){
-                        Iterator tomesIterator = TomeManager.tomes.iterator();
-                        while(tomesIterator.hasNext()){
-                            Tome tome = (Tome)tomesIterator.next();
-                            player.getInventory().addItem(tome.tome);
+                    if(player.hasPermission("artefacts.retrieve")){
+                        Iterator artefactIterator= ArtefactManager.artefacts.iterator();
+                        while(artefactIterator.hasNext()){
+                            Artefact artefact = (Artefact) artefactIterator.next();
+                            player.getInventory().addItem(artefact.item);
                         }
                     }
                 }else if(args[0].equalsIgnoreCase("add")){
-                    if(player.hasPermission("tomes.add")){
+                    if(player.hasPermission("artefacts.add")){
                         if(player.getInventory().getItemInMainHand().getType() == Material.WRITTEN_BOOK){
 
                         }                    }
@@ -42,3 +40,4 @@ public class TomesCommand implements CommandExecutor {
         return false;
     }
 }
+

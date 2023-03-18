@@ -1,30 +1,24 @@
 package net.supremesurvival.supremecore;
 import net.supremesurvival.supremecore.commonUtils.ChatUtil;
-import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
+import net.supremesurvival.supremecore.commonUtils.fileHandler.ConfigUtility;
 import net.supremesurvival.supremecore.commonUtils.Logger;
-import net.supremesurvival.supremecore.commonUtils.artefacts.ArtefactManager;
-import net.supremesurvival.supremecore.commonUtils.artefacts.ArtefactsCommand;
+import net.supremesurvival.supremecore.artefacts.ArtefactManager;
+import net.supremesurvival.supremecore.artefacts.ArtefactsCommand;
 import net.supremesurvival.supremecore.commonUtils.fileHandler.FileHandler;
 import net.supremesurvival.supremecore.commonUtils.intervalAnnouncer.IntervalAnnouncer;
-import net.supremesurvival.supremecore.commonUtils.landmarks.LandmarkCommand;
-import net.supremesurvival.supremecore.commonUtils.landmarks.LandmarkManager;
-import net.supremesurvival.supremecore.commonUtils.landmarks.PlayerListeners;
-import net.supremesurvival.supremecore.commonUtils.morality.Morality;
+import net.supremesurvival.supremecore.landmarks.LandmarkCommand;
+import net.supremesurvival.supremecore.landmarks.LandmarkManager;
+import net.supremesurvival.supremecore.landmarks.PlayerListeners;
+import net.supremesurvival.supremecore.morality.Morality;
 import net.supremesurvival.supremecore.commonUtils.placeholder.SupremePlaceholder;
-import net.supremesurvival.supremecore.commonUtils.tomes.TomeManager;
-import net.supremesurvival.supremecore.commonUtils.tomes.TomesCommand;
+import net.supremesurvival.supremecore.tomes.TomeManager;
+import net.supremesurvival.supremecore.tomes.TomesCommand;
 import net.supremesurvival.supremecore.mobUtils.HorseInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.supremesurvival.supremecore.mobUtils.MobLoot;
-import com.sk89q.worldguard.*;
-
-import java.io.File;
 
 public final class SupremeCore extends JavaPlugin implements Listener {
     public ChatUtil chatUtil = new ChatUtil(this);

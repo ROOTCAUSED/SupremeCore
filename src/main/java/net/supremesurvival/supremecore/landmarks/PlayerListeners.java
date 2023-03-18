@@ -1,11 +1,8 @@
-package net.supremesurvival.supremecore.commonUtils.landmarks;
+package net.supremesurvival.supremecore.landmarks;
 
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.citizensnpcs.api.CitizensAPI;
 import net.supremesurvival.supremecore.commonUtils.Logger;
 import net.supremesurvival.supremecore.commonUtils.TitleUtility;
-import net.supremesurvival.supremecore.commonUtils.tomes.Tome;
-import net.supremesurvival.supremecore.commonUtils.tomes.TomeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -14,23 +11,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
-import static net.supremesurvival.supremecore.commonUtils.landmarks.LandmarkManager.landmarkList;
+import static net.supremesurvival.supremecore.landmarks.LandmarkManager.landmarkList;
 
 public class PlayerListeners implements Listener {
     private static HashMap<UUID, Landmark> playersInLandmarks = new HashMap<>();
     public static HashMap<UUID, List <String>> landmarksDiscovered = new HashMap<>();
 
+    final static String handle = "LandmarkPlayerListener";
     @EventHandler
     public void join(PlayerJoinEvent event){
         //need to check if player is in list, if not insert as below
         //will optimise this to only load player data on join not load all data from beginning
-        Logger.sendMessage("Placed " + event.getPlayer().getName().toString() + " into Landmarks Discovered List", Logger.LogType.INFO, "[Landmark Manager]" );
+        Logger.sendMessage("Placed " + event.getPlayer().getName().toString() + " into Landmarks Discovered List", Logger.LogType.INFO, handle );
         if(!landmarksDiscovered.containsKey(event.getPlayer().getUniqueId())){landmarksDiscovered.put(event.getPlayer().getUniqueId(),new ArrayList<>());}
     }
     @EventHandler

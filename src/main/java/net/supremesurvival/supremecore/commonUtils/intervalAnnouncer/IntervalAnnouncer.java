@@ -2,7 +2,7 @@ package net.supremesurvival.supremecore.commonUtils.intervalAnnouncer;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.supremesurvival.supremecore.SupremeCore;
-import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
+import net.supremesurvival.supremecore.commonUtils.fileHandler.ConfigUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

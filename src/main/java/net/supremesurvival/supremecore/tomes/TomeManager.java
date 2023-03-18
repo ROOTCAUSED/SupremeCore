@@ -1,21 +1,18 @@
-package net.supremesurvival.supremecore.commonUtils.tomes;
+package net.supremesurvival.supremecore.tomes;
 
-import net.supremesurvival.supremecore.commonUtils.ConfigUtility;
+import net.supremesurvival.supremecore.commonUtils.fileHandler.ConfigUtility;
 import net.supremesurvival.supremecore.commonUtils.Logger;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class TomeManager {
     public static ArrayList<Tome> tomes = new ArrayList<Tome>();
     public static Tome tome;
+
+    final static String handle = "Tome Manager";
     public TomeManager(){
     }
 
@@ -33,7 +30,7 @@ public class TomeManager {
                     List<String> lore = section.getStringList(tomeKey + ".lore");
                     tome = new Tome(tomeAuthor, tomeTitle, pages, lore, preamble);
                     tomes.add(tome);
-                    Logger.sendMessage("Registered Tome: " + tomeTitle, Logger.LogType.INFO,"Tomes");
+                    Logger.sendMessage("Registered Tome: " + tomeTitle, Logger.LogType.INFO,handle);
                 }
             }
         }

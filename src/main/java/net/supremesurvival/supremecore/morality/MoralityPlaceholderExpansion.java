@@ -1,13 +1,10 @@
-package net.supremesurvival.supremecore.commonUtils.morality;
+package net.supremesurvival.supremecore.morality;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.supremesurvival.supremecore.SupremeCore;
-import net.supremesurvival.supremecore.commonUtils.Logger;
 import net.supremesurvival.supremecore.commonUtils.placeholder.SupremePlaceholder;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
 //This class serves as a placeholder expansion for the morality system, providing placeholders ingame for player morality and standing values.
 public class MoralityPlaceholderExpansion extends PlaceholderExpansion {
     private final SupremeCore plugin;

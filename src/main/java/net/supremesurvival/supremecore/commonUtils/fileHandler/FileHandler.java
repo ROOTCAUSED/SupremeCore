@@ -1,26 +1,22 @@
 package net.supremesurvival.supremecore.commonUtils.fileHandler;
 
-import it.unimi.dsi.fastutil.Hash;
 import net.supremesurvival.supremecore.commonUtils.Logger;
-import net.supremesurvival.supremecore.commonUtils.morality.player.MoralPlayer;
-import org.bukkit.entity.Player;
+import net.supremesurvival.supremecore.morality.player.MoralPlayer;
 import org.bukkit.plugin.Plugin;
 
 import java.io.*;
 import java.util.*;
-
-import static net.supremesurvival.supremecore.commonUtils.landmarks.PlayerListeners.landmarksDiscovered;
 
 public class FileHandler {
     private static Plugin plugin;
     public FileHandler (Plugin pl){
         this.plugin = pl;
     }
-
+    final static String handle = "FileHandler";
     public static File getDataFile(String filePath){
-        Logger.sendMessage(plugin.getDataFolder().toString(), Logger.LogType.INFO, "[File Handler]");
+        Logger.sendMessage(plugin.getDataFolder().toString(), Logger.LogType.INFO, handle);
         File dataFile = new File(plugin.getDataFolder(), filePath);
-        Logger.sendMessage(dataFile.getPath().toString(), Logger.LogType.INFO,"[File Handler]");
+        Logger.sendMessage(dataFile.getPath().toString(), Logger.LogType.INFO,handle);
         return dataFile;
     }
 
@@ -36,14 +32,14 @@ public class FileHandler {
                     Integer dataInt = Integer.valueOf(data);
                     MoralPlayer moralPlayer = new MoralPlayer(playerUUID, dataInt);
                     hashMap.put(playerUUID,moralPlayer);
-                    Logger.sendMessage("Loaded Single Data for " + playerUUID.toString() + " into Hashmap", Logger.LogType.INFO, "File Manager");
+                    Logger.sendMessage("Loaded Single Data for " + playerUUID.toString() + " into Hashmap", Logger.LogType.INFO, handle);
                     return hashMap;
                 }
             }
             //playerdata not located
         }
         catch (IOException e){
-            Logger.sendMessage(e.getMessage(), Logger.LogType.ERR, "Landmarks");
+            Logger.sendMessage(e.getMessage(), Logger.LogType.ERR, handle);
         }
         return null;
     }
@@ -61,7 +57,7 @@ public class FileHandler {
             }
             return hashmap;
 }catch (IOException e){
-            Logger.sendMessage(e.getMessage(), Logger.LogType.ERR, "Landmarks");
+            Logger.sendMessage(e.getMessage(), Logger.LogType.ERR, handle);
         }
         return null;
     }

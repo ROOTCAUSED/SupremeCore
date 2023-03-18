@@ -1,18 +1,15 @@
-package net.supremesurvival.supremecore.commonUtils.tomes;
+package net.supremesurvival.supremecore.tomes;
 
 import net.supremesurvival.supremecore.commonUtils.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.map.MinecraftFont;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 //This class will allow us to add lore tomes to the server. Lore tomes will be ingame Written_Books (by default can only
 //be written by a player and have limited use) which are filled from a config.yml file.
@@ -20,9 +17,11 @@ import java.util.Map;
 public class Tome {
     ItemStack tome = new ItemStack(Material.WRITTEN_BOOK);
     BookMeta tomeMeta = (BookMeta)tome.getItemMeta();
+
+    final static String handle = "Tome";
     String preamble;
     public Tome(String author, String title, String message, List<String> lore, String preamble){
-        Logger.sendMessage("Creating Tome: " + title, Logger.LogType.INFO, "Tomes");
+        Logger.sendMessage("Creating Tome: " + title, Logger.LogType.INFO, handle);
         tomeMeta.setAuthor(author);
         tomeMeta.setTitle(title);
         this.preamble = preamble;
@@ -44,7 +43,7 @@ public class Tome {
             }
         }
         tome.setItemMeta(tomeMeta);
-        Logger.sendMessage("Tome: " + title + " created", Logger.LogType.INFO, "Tomes");
+        Logger.sendMessage("Tome: " + title + " created", Logger.LogType.INFO, handle);
 
     }
     public String getName(){
@@ -61,7 +60,6 @@ public class Tome {
     //by checking for nl and for each found in a given page reducing the character count of that page by ~29-30. For now, removing all
     //new lines is an acceptable middleground.
     public List<String> compilePages(String message){
-        Logger.sendMessage(message, Logger.LogType.INFO, "Tomes");
         //message = replaceNewLines(message);
         List<String> pages = new ArrayList<>();
         if(message.length() < 250){
@@ -97,7 +95,6 @@ public class Tome {
     private static List<String> getPages(String rawText){
         rawText = "\n" + rawText;
         List<String> pages = new ArrayList<String>();
-        Logger.sendMessage(rawText, Logger.LogType.INFO,"Tomes");
 
         List<String> lines = getLines(rawText);
         String pageText = "";
@@ -105,7 +102,6 @@ public class Tome {
             pageText += lines.get(i);
             if(i != 1 && i % 14 == 0){
                 pages.add(pageText);
-                Logger.sendMessage(pageText, Logger.LogType.INFO,"Tomes");
                 pageText= "";
             }
         }
@@ -141,21 +137,19 @@ public class Tome {
                         if(font.getWidth(line + " " + word) + spaces > maxLineWidth) {
                             lines.add(line + '\n');
                             line = word;
-                            Logger.sendMessage(line.toString(), Logger.LogType.INFO,"Tomes");
                             continue;
                         }
 
                         line += " " + word;
                     }
                     if(!line.equals("")){
-                        Logger.sendMessage(line.toString(), Logger.LogType.INFO,"Tomes");
                         lines.add(line + "\n");
                     }
                 }
             }
         }catch (IllegalArgumentException exception){
             lines.clear();
-            Logger.sendMessage(exception.toString(), Logger.LogType.INFO,"Tomes");
+            Logger.sendMessage(exception.toString(), Logger.LogType.INFO,handle);
         }
         return lines;
     }

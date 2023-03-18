@@ -1,4 +1,4 @@
-package net.supremesurvival.supremecore.commonUtils.artefacts;
+package net.supremesurvival.supremecore.tomes;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -9,7 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 
-public class ArtefactsCommand implements CommandExecutor {
+public class TomesCommand implements CommandExecutor {
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player){
@@ -19,15 +20,15 @@ public class ArtefactsCommand implements CommandExecutor {
 
             } else if(args.length == 1){
                 if(args[0].equalsIgnoreCase("retrieve")){
-                    if(player.hasPermission("artefacts.retrieve")){
-                        Iterator artefactIterator= ArtefactManager.artefacts.iterator();
-                        while(artefactIterator.hasNext()){
-                            Artefact artefact = (Artefact) artefactIterator.next();
-                            player.getInventory().addItem(artefact.item);
+                    if(player.hasPermission("tomes.retrieve")){
+                        Iterator tomesIterator = TomeManager.tomes.iterator();
+                        while(tomesIterator.hasNext()){
+                            Tome tome = (Tome)tomesIterator.next();
+                            player.getInventory().addItem(tome.tome);
                         }
                     }
                 }else if(args[0].equalsIgnoreCase("add")){
-                    if(player.hasPermission("artefacts.add")){
+                    if(player.hasPermission("tomes.add")){
                         if(player.getInventory().getItemInMainHand().getType() == Material.WRITTEN_BOOK){
 
                         }                    }
@@ -40,4 +41,3 @@ public class ArtefactsCommand implements CommandExecutor {
         return false;
     }
 }
-
