@@ -13,6 +13,9 @@ permissions:
   tomes.retrieve:
     description: retrieves all tomes.
     default:  op
+  sanguine.manage:
+    description: manage vampirism states
+    default: op
 commands:
   HorseInfo:
     description: Your description
@@ -28,3 +31,7 @@ commands:
   Landmarks:
     description: lists landmarks
     permission: landmarks.list
+  Vampire:
+    description: manage vampirism curse states
+    usage: /vampire <curse|cure|status> <player>
+    permission: sanguine.manage

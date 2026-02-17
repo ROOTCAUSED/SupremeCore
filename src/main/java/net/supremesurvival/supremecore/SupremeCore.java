@@ -14,6 +14,7 @@ import net.supremesurvival.supremecore.commonUtils.placeholder.SupremePlaceholde
 import net.supremesurvival.supremecore.tomes.TomeManager;
 import net.supremesurvival.supremecore.tomes.TomesCommand;
 import net.supremesurvival.supremecore.mobUtils.HorseInfo;
+import net.supremesurvival.supremecore.sanguine.Vampire;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
@@ -27,6 +28,7 @@ public final class SupremeCore extends JavaPlugin implements Listener {
     public ConfigUtility configUtility = new ConfigUtility(this);
     IntervalAnnouncer intervalAnnouncer = new IntervalAnnouncer(this);
     FileHandler fileHandler = new FileHandler(this);
+    Vampire vampire = new Vampire(this);
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -44,8 +46,11 @@ public final class SupremeCore extends JavaPlugin implements Listener {
         Logger.sendMessage((ChatColor.YELLOW + "[SupremeCore] [+] " + ChatColor.GRAY + "SupremeNerf Gold Filter Loaded."), Logger.LogType.INFO, "SupremeCore");
         this.getCommand("HorseInfo").setExecutor(new HorseInfo());
         this.getCommand("Landmarks").setExecutor(new LandmarkCommand());
+        this.getCommand("Vampire").setExecutor(vampire);
         Morality.enable();
         this.getServer().getPluginManager().registerEvents(new Morality(), this);
+        this.getServer().getPluginManager().registerEvents(vampire, this);
+        vampire.enable();
         this.getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
     }
 
@@ -53,6 +58,7 @@ public final class SupremeCore extends JavaPlugin implements Listener {
     public void onDisable() {
         // Plugin shutdown logic
         Morality.disable();
+        vampire.disable();
         LandmarkManager.disable();
     }
 

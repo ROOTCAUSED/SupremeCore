@@ -1,0 +1,15 @@
+# Sanguine module configuration
+# feed-interval-ticks: how long a vampire can go without feeding before losing sun protection
+# 72000 ticks = 1 Minecraft hour (about 60 minutes real-time at 20 TPS)
+feed-interval-ticks: 72000
+
+# damage applied every sun-damage-interval-ticks while starving and in direct sunlight
+sun-damage: 1.0
+sun-damage-interval-ticks: 40
+
+messages:
+  feed: '&cYou feed on the sleeping villager. Your sun protection returns.'
+  starve: '&4Your vampiric hunger overtakes you. The sun burns your flesh.'
+
+# Runtime player state storage
+players: {}
