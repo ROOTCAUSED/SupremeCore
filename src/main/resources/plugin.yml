@@ -16,6 +16,12 @@ permissions:
   sanguine.manage:
     description: manage vampirism states
     default: op
+  artefacts.retrieve:
+    description: retrieve configured artefacts
+    default: op
+  artefacts.add:
+    description: add/configure artefacts
+    default: op
 commands:
   HorseInfo:
     description: Your description
