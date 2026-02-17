@@ -22,6 +22,9 @@ permissions:
   artefacts.add:
     description: add/configure artefacts
     default: op
+  tomes.add:
+    description: add/configure tomes
+    default: op
 commands:
   HorseInfo:
     description: Your description
