@@ -15,6 +15,7 @@ import net.supremesurvival.supremecore.tomes.TomeManager;
 import net.supremesurvival.supremecore.tomes.TomesCommand;
 import net.supremesurvival.supremecore.mobUtils.HorseInfo;
 import net.supremesurvival.supremecore.sanguine.Vampire;
+import net.supremesurvival.supremecore.realestate.RealEstateCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
@@ -47,6 +48,7 @@ public final class SupremeCore extends JavaPlugin implements Listener {
         this.getCommand("HorseInfo").setExecutor(new HorseInfo());
         this.getCommand("Landmarks").setExecutor(new LandmarkCommand());
         this.getCommand("Vampire").setExecutor(vampire);
+        this.getCommand("RealEstate").setExecutor(new RealEstateCommand());
         Morality.enable();
         this.getServer().getPluginManager().registerEvents(new Morality(), this);
         this.getServer().getPluginManager().registerEvents(vampire, this);

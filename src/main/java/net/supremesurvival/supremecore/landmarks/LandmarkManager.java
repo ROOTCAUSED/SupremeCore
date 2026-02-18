@@ -4,7 +4,7 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import com.sk89q.worldguard.protection.regions.RegionManager;
+import com.sk89q.worldguard.protection.managers.RegionManager;
 import net.supremesurvival.supremecore.commonUtils.Logger;
 import net.supremesurvival.supremecore.commonUtils.fileHandler.ConfigUtility;
 import net.supremesurvival.supremecore.commonUtils.fileHandler.FileHandler;
