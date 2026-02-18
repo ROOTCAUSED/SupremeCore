@@ -1,0 +1,51 @@
+# Interval in minutes between automatic trigger attempts.
+interval-minutes: 15
+
+# Rotation order for scheduled trigger attempts.
+rotation-order:
+  - PVP
+  - PARKOUR
+  - SPLEEF
+
+# Where players are sent after a game ends.
+lobby:
+  world: world
+  x: 0.5
+  y: 80.0
+  z: 0.5
+  yaw: 0.0
+  pitch: 0.0
+
+types:
+  PVP:
+    min-players: 4
+    duration-seconds: 600
+    arena:
+      world: world
+      x: 100.5
+      y: 70.0
+      z: 100.5
+      yaw: 0.0
+      pitch: 0.0
+
+  PARKOUR:
+    min-players: 2
+    duration-seconds: 420
+    arena:
+      world: world
+      x: 200.5
+      y: 80.0
+      z: 200.5
+      yaw: 0.0
+      pitch: 0.0
+
+  SPLEEF:
+    min-players: 2
+    duration-seconds: 480
+    arena:
+      world: world
+      x: 300.5
+      y: 70.0
+      z: 300.5
+      yaw: 0.0
+      pitch: 0.0

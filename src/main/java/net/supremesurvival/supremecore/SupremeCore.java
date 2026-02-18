@@ -18,6 +18,8 @@ import net.supremesurvival.supremecore.mobUtils.HorseInfo;
 import net.supremesurvival.supremecore.sanguine.Vampire;
 import net.supremesurvival.supremecore.realestate.RealEstateCommand;
 import net.supremesurvival.supremecore.loot.LootManager;
+import net.supremesurvival.supremecore.minigames.MinigameCommand;
+import net.supremesurvival.supremecore.minigames.MinigameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
@@ -33,6 +35,7 @@ public final class SupremeCore extends JavaPlugin implements Listener {
     FileHandler fileHandler = new FileHandler(this);
     Vampire vampire = new Vampire(this);
     LootManager lootManager = new LootManager(this);
+    MinigameManager minigameManager = new MinigameManager(this);
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -50,12 +53,15 @@ public final class SupremeCore extends JavaPlugin implements Listener {
         Logger.sendMessage((ChatColor.YELLOW + "[SupremeCore] [+] " + ChatColor.GRAY + "SupremeNerf Gold Filter Loaded."), Logger.LogType.INFO, "SupremeCore");
         lootManager.enable();
         this.getServer().getPluginManager().registerEvents(lootManager, this);
+        minigameManager.enable();
         this.getCommand("HorseInfo").setExecutor(new HorseInfo());
         this.getCommand("Landmarks").setExecutor(new LandmarkCommand());
         this.getCommand("Vampire").setExecutor(vampire);
         this.getCommand("RealEstate").setExecutor(new RealEstateCommand());
         this.getCommand("Morality").setExecutor(new MoralityCommand());
         this.getCommand("Morality").setTabCompleter(new MoralityCommand());
+        this.getCommand("Minigame").setExecutor(new MinigameCommand(minigameManager));
+        this.getCommand("Minigame").setTabCompleter(new MinigameCommand(minigameManager));
         Morality.enable();
         this.getServer().getPluginManager().registerEvents(new Morality(), this);
         this.getServer().getPluginManager().registerEvents(vampire, this);
@@ -68,6 +74,7 @@ public final class SupremeCore extends JavaPlugin implements Listener {
         // Plugin shutdown logic
         Morality.disable();
         vampire.disable();
+        minigameManager.disable();
         LandmarkManager.disable();
     }
 
