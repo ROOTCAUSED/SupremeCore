@@ -46,6 +46,9 @@ permissions:
   realestate.bypasscooldown:
     description: bypass /realestate view cooldown checks
     default: op
+  morality.admin:
+    description: administer morality values and reload settings
+    default: op
 commands:
   HorseInfo:
     description: Your description
@@ -69,3 +72,7 @@ commands:
     description: list and view Towny plots for sale
     usage: /realestate <list|view>
     aliases: [re]
+  Morality:
+    description: view and manage morality alignment
+    usage: /morality <status|top|add|set|reload>
+    aliases: [moral]

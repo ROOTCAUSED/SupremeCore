@@ -10,6 +10,7 @@ import net.supremesurvival.supremecore.landmarks.LandmarkCommand;
 import net.supremesurvival.supremecore.landmarks.LandmarkManager;
 import net.supremesurvival.supremecore.landmarks.PlayerListeners;
 import net.supremesurvival.supremecore.morality.Morality;
+import net.supremesurvival.supremecore.morality.MoralityCommand;
 import net.supremesurvival.supremecore.commonUtils.placeholder.SupremePlaceholder;
 import net.supremesurvival.supremecore.tomes.TomeManager;
 import net.supremesurvival.supremecore.tomes.TomesCommand;
@@ -49,6 +50,8 @@ public final class SupremeCore extends JavaPlugin implements Listener {
         this.getCommand("Landmarks").setExecutor(new LandmarkCommand());
         this.getCommand("Vampire").setExecutor(vampire);
         this.getCommand("RealEstate").setExecutor(new RealEstateCommand());
+        this.getCommand("Morality").setExecutor(new MoralityCommand());
+        this.getCommand("Morality").setTabCompleter(new MoralityCommand());
         Morality.enable();
         this.getServer().getPluginManager().registerEvents(new Morality(), this);
         this.getServer().getPluginManager().registerEvents(vampire, this);

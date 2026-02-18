@@ -1,4 +1,20 @@
-moralitybounds:
+morality:
+  min: -20000
+  max: 20000
+  decay:
+    enabled: true
+    points-per-day: 30
+
+actions:
+  raid-win: 800
+  raid-trigger: -180
+  villager-kill: -120
+  kill-good-player: -180
+  kill-evil-player: 140
+
+# Highest threshold <= player morality becomes their current standing.
+# Keep this sorted highest-to-lowest for readability.
+bounds:
   DIVINE: 16000
   SAINT: 10000
   PURE: 6000

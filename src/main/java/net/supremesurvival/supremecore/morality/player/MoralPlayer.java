@@ -1,69 +1,50 @@
 package net.supremesurvival.supremecore.morality.player;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import java.util.UUID;
 
 public class MoralPlayer {
-    final UUID uuid;
-    Integer morality;
-    MoralStanding moralStanding;
+    private final UUID uuid;
+    private int morality;
+    private String standing;
+    private long lastUpdatedEpochSeconds;
 
-    public MoralPlayer(UUID uuid, int morality){
+    public MoralPlayer(UUID uuid, int morality, String standing, long lastUpdatedEpochSeconds) {
         this.uuid = uuid;
         this.morality = morality;
-
-    }
-    public Player getPlayer(){
-        return Bukkit.getPlayer(this.uuid);
-    }
-    public int getMorality(){
-        return this.morality;
+        this.standing = standing;
+        this.lastUpdatedEpochSeconds = lastUpdatedEpochSeconds;
     }
 
-    public void setMorality(Integer morality){
+    // Backward-compatible constructor used by legacy file handlers.
+    public MoralPlayer(UUID uuid, int morality) {
+        this(uuid, morality, "NEUTRAL", System.currentTimeMillis() / 1000L);
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public int getMorality() {
+        return morality;
+    }
+
+    public void setMorality(int morality) {
         this.morality = morality;
     }
 
-    public void addMorality(Integer morality){
-        this.morality = this.morality + morality;
+    public String getStanding() {
+        return standing;
     }
 
-    public void reduceMorality(Integer morality){
-        this.morality = this.morality -morality;
-    }
-    public MoralStanding getStanding(){
-        return moralStanding;
+    public void setStanding(String standing) {
+        this.standing = standing;
     }
 
-    public void updateMoralStanding(MoralStanding standing){
-        this.moralStanding = standing;
-    }
-    public enum MoralStanding{
-        DIVINE,
-        SAINT,
-        PURE,
-        HEROIC,
-        RIGHTEOUS,
-        VIRTUOUS,
-        NOBLE,
-        HONOURABLE,
-        LAWFUL,
-        RESPECTABLE,
-        NEUTRAL,
-        CHAOTIC,
-        CORRUPT,
-        DISHONOURABLE,
-        INFAMOUS,
-        RUTHLESS,
-        VILLAINOUS,
-        MALEVOLENT,
-        WRETCHED,
-        DIABOLICAL,
-        DEMONIC
-
+    public long getLastUpdatedEpochSeconds() {
+        return lastUpdatedEpochSeconds;
     }
 
+    public void setLastUpdatedEpochSeconds(long lastUpdatedEpochSeconds) {
+        this.lastUpdatedEpochSeconds = lastUpdatedEpochSeconds;
+    }
 }
-
