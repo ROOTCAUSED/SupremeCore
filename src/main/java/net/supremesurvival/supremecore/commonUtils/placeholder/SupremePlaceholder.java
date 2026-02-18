@@ -6,36 +6,36 @@ import net.supremesurvival.supremecore.morality.Morality;
 import net.supremesurvival.supremecore.morality.MoralityPlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-//This class will serve as a single place for us to return placeholder responses. Placeholder variables will be loaded into the switch case below.
-//Shouldnt really get too large, even if it did i dont think it'd cause issues. If server sets on fire will revisit.
+
+// This class serves as a single place for us to return placeholder responses.
+// Placeholder variables will be loaded into the switch case below.
 public class SupremePlaceholder {
     public static SupremeCore pl;
     final static String handle = "Supreme Placeholder";
-    public static String onRequest(Player player, String string){
-        Logger.sendMessage(string, Logger.LogType.INFO, "S-PAPI");
-        switch (string) {
-            case "morality" -> {
-                Logger.sendMessage("returned Morality", Logger.LogType.INFO, handle);
-                return String.valueOf(Morality.getMorality(player));
-            }
+
+    public static String onRequest(Player player, String string) {
+        if (player == null || string == null) {
+            return null;
+        }
+
+        return switch (string) {
+            case "morality" -> String.valueOf(Morality.getMorality(player));
             case "standing" -> {
-                Logger.sendMessage("returned Morality", Logger.LogType.INFO, handle);
                 String standingString = Morality.getMoralStanding(player);
                 standingString = standingString.substring(0, 1).toUpperCase() + standingString.substring(1).toLowerCase();
-                return standingString;
+                yield standingString;
             }
-            default -> {
-                return null;
-            }
-        }
+            default -> null;
+        };
     }
-    public static void register(){
-        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI")!= null){
+
+    public static void register() {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new MoralityPlaceholderExpansion().register();
         }
     }
 
-    public static void enable(SupremeCore plugin){
+    public static void enable(SupremeCore plugin) {
         pl = plugin;
         Logger.sendMessage("Enabled", Logger.LogType.INFO, "SupremePAPI");
     }

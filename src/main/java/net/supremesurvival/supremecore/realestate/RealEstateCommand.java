@@ -1,20 +1,23 @@
 package net.supremesurvival.supremecore.realestate;
 
+import net.supremesurvival.supremecore.commonUtils.fileHandler.ConfigUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class RealEstateCommand implements CommandExecutor {
     private static final int PAGE_SIZE = 8;
 
     private final RealEstateManager manager = new RealEstateManager();
+    private final Map<UUID, Long> lastViewUse = new HashMap<>();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -87,6 +90,24 @@ public class RealEstateCommand implements CommandExecutor {
                 return true;
             }
 
+            RealEstateSecurityPolicy policy = loadPolicy();
+            if (!policy.allowedWorlds.isEmpty() && !policy.allowedWorlds.contains(listing.worldName().toLowerCase(Locale.ROOT))) {
+                player.sendMessage(ChatColor.RED + "Viewing is disabled for that world.");
+                return true;
+            }
+
+            if (policy.cooldownSeconds > 0 && !player.hasPermission("realestate.bypasscooldown")) {
+                long now = System.currentTimeMillis();
+                long last = lastViewUse.getOrDefault(player.getUniqueId(), 0L);
+                long waitMs = (policy.cooldownSeconds * 1000L) - (now - last);
+                if (waitMs > 0) {
+                    long waitSeconds = (waitMs + 999L) / 1000L;
+                    player.sendMessage(ChatColor.RED + "You must wait " + waitSeconds + "s before using /realestate view again.");
+                    return true;
+                }
+                lastViewUse.put(player.getUniqueId(), now);
+            }
+
             Location target = manager.resolveTeleportLocation(listing);
             if (target == null) {
                 player.sendMessage(ChatColor.RED + "Could not resolve a safe viewing location for that listing.");
@@ -102,6 +123,26 @@ public class RealEstateCommand implements CommandExecutor {
         return true;
     }
 
+    private RealEstateSecurityPolicy loadPolicy() {
+        FileConfiguration config = ConfigUtility.getModuleConfig("RealEstate");
+        int cooldownSeconds = Math.max(0, config.getInt("view.cooldown-seconds", 15));
+        List<String> worlds = new ArrayList<>();
+
+        ConfigurationSection section = config.getConfigurationSection("view");
+        if (section != null) {
+            worlds = section.getStringList("world-allowlist");
+        }
+
+        Set<String> allowed = new HashSet<>();
+        for (String world : worlds) {
+            if (world != null && !world.isBlank()) {
+                allowed.add(world.toLowerCase(Locale.ROOT));
+            }
+        }
+
+        return new RealEstateSecurityPolicy(cooldownSeconds, allowed);
+    }
+
     private void sendHelp(Player player) {
         player.sendMessage(ChatColor.YELLOW + "/realestate list [town] [page]");
         player.sendMessage(ChatColor.YELLOW + "/realestate view <listingId>");
@@ -115,4 +156,6 @@ public class RealEstateCommand implements CommandExecutor {
             return false;
         }
     }
+
+    private record RealEstateSecurityPolicy(int cooldownSeconds, Set<String> allowedWorlds) {}
 }

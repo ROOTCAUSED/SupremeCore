@@ -43,6 +43,9 @@ permissions:
   realestate.view:
     description: teleport to view a Towny listing
     default: true
+  realestate.bypasscooldown:
+    description: bypass /realestate view cooldown checks
+    default: op
 commands:
   HorseInfo:
     description: Your description

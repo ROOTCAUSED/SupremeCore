@@ -1,0 +1,10 @@
+view:
+  # Cooldown between /realestate view teleports.
+  cooldown-seconds: 15
+
+  # Leave empty to allow all worlds.
+  # Example:
+  # world-allowlist:
+  #   - world
+  #   - world_nether
+  world-allowlist: []
