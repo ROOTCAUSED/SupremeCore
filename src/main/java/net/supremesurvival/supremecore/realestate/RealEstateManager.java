@@ -1,5 +1,6 @@
 package net.supremesurvival.supremecore.realestate;
 
+import net.supremesurvival.supremecore.commonUtils.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -17,6 +18,7 @@ import java.util.Locale;
 public class RealEstateManager {
 
     private static final long CACHE_MS = 20_000L;
+    private static final String HANDLE = "RealEstate";
 
     private List<RealEstateListing> cachedListings = new ArrayList<>();
     private long lastRefresh = 0L;
@@ -117,17 +119,18 @@ public class RealEstateManager {
 
             out.sort(Comparator.comparingDouble(RealEstateListing::price));
             return out;
-        } catch (Throwable ignored) {
+        } catch (ReflectiveOperationException ex) {
+            Logger.sendMessage("Towny reflection lookup failed: " + ex.getMessage(), Logger.LogType.WARN, HANDLE);
             return Collections.emptyList();
         }
     }
 
-    private static Object invoke(Object target, String method) throws Exception {
+    private static Object invoke(Object target, String method) throws ReflectiveOperationException {
         Method m = target.getClass().getMethod(method);
         return m.invoke(target);
     }
 
-    private static Object invokeStatic(Class<?> target, String method) throws Exception {
+    private static Object invokeStatic(Class<?> target, String method) throws ReflectiveOperationException {
         Method m = target.getMethod(method);
         return m.invoke(null);
     }
@@ -137,7 +140,7 @@ public class RealEstateManager {
         try {
             Method m = target.getClass().getMethod(method);
             return m.invoke(target);
-        } catch (Throwable ignored) {
+        } catch (ReflectiveOperationException ignored) {
             return null;
         }
     }
