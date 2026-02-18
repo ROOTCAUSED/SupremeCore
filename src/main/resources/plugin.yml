@@ -37,6 +37,12 @@ permissions:
   landmarks.nearest:
     description: show nearest landmark
     default: true
+  realestate.list:
+    description: list for-sale Towny plots
+    default: true
+  realestate.view:
+    description: teleport to view a Towny listing
+    default: true
 commands:
   HorseInfo:
     description: Your description
@@ -56,3 +62,7 @@ commands:
     description: manage vampirism curse states
     usage: /vampire <curse|cure|status> <player>
     permission: sanguine.manage
+  RealEstate:
+    description: list and view Towny plots for sale
+    usage: /realestate <list|view>
+    aliases: [re]
