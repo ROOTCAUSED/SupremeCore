@@ -125,12 +125,12 @@ public class RealEstateManager {
         }
     }
 
-    private static Object invoke(Object target, String method) throws Exception {
+    private static Object invoke(Object target, String method) throws ReflectiveOperationException {
         Method m = target.getClass().getMethod(method);
         return m.invoke(target);
     }
 
-    private static Object invokeStatic(Class<?> target, String method) throws Exception {
+    private static Object invokeStatic(Class<?> target, String method) throws ReflectiveOperationException {
         Method m = target.getMethod(method);
         return m.invoke(null);
     }
