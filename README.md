@@ -40,6 +40,7 @@ SupremeCore currently includes modular systems for:
 - `/landmarks` — list discovered landmarks / journal-related actions
 - `/vampire <curse|cure|status> <player>` — manage vampirism state
 - `/realestate <list|view>` (`/re`) — list for-sale Towny plots and view one
+- `/morality <status|top|add|set|reload>` (`/moral`) — check alignment and manage morality
 
 ---
 
@@ -57,6 +58,7 @@ SupremeCore currently includes modular systems for:
 - `landmarks.nearest`
 - `realestate.list`
 - `realestate.view`
+- `morality.admin`
 
 ---
 
