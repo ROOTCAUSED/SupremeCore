@@ -15,6 +15,11 @@ public class MoralPlayer {
         this.lastUpdatedEpochSeconds = lastUpdatedEpochSeconds;
     }
 
+    // Backward-compatible constructor used by legacy file handlers.
+    public MoralPlayer(UUID uuid, int morality) {
+        this(uuid, morality, "NEUTRAL", System.currentTimeMillis() / 1000L);
+    }
+
     public UUID getUuid() {
         return uuid;
     }
