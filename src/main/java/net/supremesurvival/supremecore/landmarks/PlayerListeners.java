@@ -17,10 +17,13 @@ import static net.supremesurvival.supremecore.landmarks.LandmarkManager.landmark
 public class PlayerListeners implements Listener {
     private static final HashMap<UUID, Landmark> playersInLandmarks = new HashMap<>();
     public static HashMap<UUID, List<String>> landmarksDiscovered = new HashMap<>();
+    public static HashMap<UUID, Map<String, Long>> landmarksDiscoveredAt = new HashMap<>();
 
     @EventHandler
     public void join(PlayerJoinEvent event) {
-        landmarksDiscovered.putIfAbsent(event.getPlayer().getUniqueId(), new ArrayList<>());
+        UUID id = event.getPlayer().getUniqueId();
+        landmarksDiscovered.putIfAbsent(id, new ArrayList<>());
+        landmarksDiscoveredAt.putIfAbsent(id, new HashMap<>());
     }
 
     @EventHandler
@@ -73,10 +76,16 @@ public class PlayerListeners implements Listener {
     }
 
     public void discoverLandmark(Player player, Landmark landmark) {
-        List<String> landmarksPlayer = landmarksDiscovered.getOrDefault(player.getUniqueId(), new ArrayList<>());
+        UUID playerId = player.getUniqueId();
+        List<String> landmarksPlayer = landmarksDiscovered.getOrDefault(playerId, new ArrayList<>());
         if (!landmarksPlayer.contains(landmark.getID())) {
             landmarksPlayer.add(landmark.getID());
-            landmarksDiscovered.put(player.getUniqueId(), landmarksPlayer);
+            landmarksDiscovered.put(playerId, landmarksPlayer);
+
+            Map<String, Long> discoveredAt = landmarksDiscoveredAt.getOrDefault(playerId, new HashMap<>());
+            discoveredAt.put(landmark.getID(), System.currentTimeMillis());
+            landmarksDiscoveredAt.put(playerId, discoveredAt);
+
             TitleUtility.sendPlayer("Landmark Discovered", landmark.getTitle(), 10, 40, 10, player);
             if (!landmark.getAnnouncement().isBlank()) {
                 player.sendMessage(landmark.getAnnouncement());

@@ -34,6 +34,9 @@ permissions:
   landmarks.list:
     description: list and view discovered landmarks
     default: true
+  landmarks.nearest:
+    description: show nearest landmark
+    default: true
 commands:
   HorseInfo:
     description: Your description

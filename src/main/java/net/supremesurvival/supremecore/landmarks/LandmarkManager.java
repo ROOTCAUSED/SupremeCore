@@ -17,6 +17,7 @@ import java.io.*;
 import java.util.*;
 
 import static net.supremesurvival.supremecore.landmarks.PlayerListeners.landmarksDiscovered;
+import static net.supremesurvival.supremecore.landmarks.PlayerListeners.landmarksDiscoveredAt;
 
 public class LandmarkManager {
 
@@ -102,10 +103,25 @@ public class LandmarkManager {
                 UUID playerUUID = UUID.fromString(parts[0]);
                 String[] landmarkIDs = parts[1].split(";");
                 List<String> landmarks = new ArrayList<>();
-                for (String id : landmarkIDs) {
-                    if (!id.isBlank()) landmarks.add(id);
+                Map<String, Long> discoveredAt = new HashMap<>();
+                for (String token : landmarkIDs) {
+                    if (token.isBlank()) continue;
+                    String id = token;
+                    long when = 0L;
+                    if (token.contains("@")) {
+                        String[] idTs = token.split("@", 2);
+                        id = idTs[0];
+                        try {
+                            when = Long.parseLong(idTs[1]);
+                        } catch (NumberFormatException ignored) {
+                            when = 0L;
+                        }
+                    }
+                    landmarks.add(id);
+                    if (when > 0) discoveredAt.put(id, when);
                 }
                 landmarksDiscovered.put(playerUUID, landmarks);
+                landmarksDiscoveredAt.put(playerUUID, discoveredAt);
             }
         } catch (FileNotFoundException ignored) {
             // First boot / no data yet.
@@ -121,8 +137,14 @@ public class LandmarkManager {
                 List<String> landmarks = entry.getValue();
                 if (landmarks == null || landmarks.isEmpty()) continue;
                 writer.write(playerID + ":");
+                Map<String, Long> discoveredAt = landmarksDiscoveredAt.getOrDefault(playerID, Collections.emptyMap());
                 for (String landmark : landmarks) {
-                    writer.write(landmark + ";");
+                    long ts = discoveredAt.getOrDefault(landmark, 0L);
+                    if (ts > 0) {
+                        writer.write(landmark + "@" + ts + ";");
+                    } else {
+                        writer.write(landmark + ";");
+                    }
                 }
                 writer.newLine();
             }
