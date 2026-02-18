@@ -1,19 +1,107 @@
 # SupremeCore
- 
-To Do:
 
-Refactor interval announcer package to use the title utility
+Core gameplay plugin for the Supreme network.
 
-review mobutils > mobloot (pretty sure i had more code in there)
+SupremeCore currently includes modular systems for:
+- Announcements
+- Tomes
+- Artefacts
+- Landmarks (discovery + journal + nearest)
+- Sanguine (vampirism state management)
+- RealEstate (Towny plot listings/view flow)
 
-add placeholder for landmarks discovered
+---
 
-refactor voteutils
+## Requirements
 
-refator all code that sends message to player directly, send through chatutil 
+- Java **17**
+- Paper/Spigot-compatible server (API version 1.16+)
+- Maven 3.8+
+- Runtime dependencies:
+  - **WorldGuard** (required)
+  - **PlaceholderAPI** (soft dependency)
 
-refactor filehandler to handle jsonFiles 
+---
 
-Move ConfigUtility to fileHanlder package
+## Installation
 
-General refactor packages within commonUtils to be outside of commonUtils
+1. Download the latest `SupremeCore-*.jar` from GitHub Releases.
+2. Drop it into your server `plugins/` directory.
+3. Ensure required dependencies are installed.
+4. Start/restart the server.
+
+---
+
+## Commands
+
+- `/announcer` (`/aa`) — interval announcer management
+- `/tomes` — manage custom tomes
+- `/artefacts` — manage custom artefacts
+- `/landmarks` — list discovered landmarks / journal-related actions
+- `/vampire <curse|cure|status> <player>` — manage vampirism state
+- `/realestate <list|view>` (`/re`) — list for-sale Towny plots and view one
+
+---
+
+## Permissions
+
+- `announcer.send`
+- `tomes.retrieve`
+- `tomes.add`
+- `tomes.list`
+- `tomes.remove`
+- `sanguine.manage`
+- `artefacts.retrieve`
+- `artefacts.add`
+- `landmarks.list`
+- `landmarks.nearest`
+- `realestate.list`
+- `realestate.view`
+
+---
+
+## Build (local)
+
+```bash
+mvn -B clean package
+```
+
+Build output:
+- `target/*.jar`
+
+---
+
+## CI / Release Automation
+
+GitHub Actions workflow is configured to:
+- Build on pushes to `main` and `feat/**`
+- Build on pull requests
+- Build on tags matching `v*`
+
+When pushing a version tag (for example `v0.0.1-beta`), Actions will:
+1. Build the plugin jar
+2. Upload build artifacts
+3. Create/publish a GitHub Release
+4. Attach `target/*.jar` to that release
+
+Create a release tag:
+
+```bash
+git tag v0.0.2-beta
+git push origin v0.0.2-beta
+```
+
+---
+
+## Development Notes
+
+- Keep feature work in PRs whenever possible.
+- Keep commits signed/verified.
+- RealEstate integration is designed around Towny market listing/view behavior.
+
+---
+
+## Maintainers
+
+- `xMachiavellix`
+- `Jarvis` (automation/dev support)
