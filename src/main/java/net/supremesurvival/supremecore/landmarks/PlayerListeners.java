@@ -1,7 +1,6 @@
 package net.supremesurvival.supremecore.landmarks;
 
 import net.citizensnpcs.api.CitizensAPI;
-import net.supremesurvival.supremecore.commonUtils.Logger;
 import net.supremesurvival.supremecore.commonUtils.TitleUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -17,74 +16,76 @@ import static net.supremesurvival.supremecore.landmarks.LandmarkManager.landmark
 
 public class PlayerListeners implements Listener {
     private static final HashMap<UUID, Landmark> playersInLandmarks = new HashMap<>();
-    public static HashMap<UUID, List <String>> landmarksDiscovered = new HashMap<>();
+    public static HashMap<UUID, List<String>> landmarksDiscovered = new HashMap<>();
 
-    final static String handle = "LandmarkPlayerListener";
     @EventHandler
-    public void join(PlayerJoinEvent event){
-        //need to check if player is in list, if not insert as below
-        //will optimise this to only load player data on join not load all data from beginning
-        Logger.sendMessage("Placed " + event.getPlayer().getName() + " into Landmarks Discovered List", Logger.LogType.INFO, handle );
-        if(!landmarksDiscovered.containsKey(event.getPlayer().getUniqueId())){landmarksDiscovered.put(event.getPlayer().getUniqueId(),new ArrayList<>());}
+    public void join(PlayerJoinEvent event) {
+        landmarksDiscovered.putIfAbsent(event.getPlayer().getUniqueId(), new ArrayList<>());
     }
+
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event){
-        //ignore citizens npc's
-        if(Bukkit.getPluginManager().getPlugin("Citizens").isEnabled() && CitizensAPI.getNPCRegistry().isNPC(event.getPlayer())){
+    public void onPlayerMove(PlayerMoveEvent event) {
+        if (event.getTo() == null) return;
+
+        // Ignore movement-less events.
+        if (event.getFrom().getBlockX() == event.getTo().getBlockX()
+                && event.getFrom().getBlockY() == event.getTo().getBlockY()
+                && event.getFrom().getBlockZ() == event.getTo().getBlockZ()) {
             return;
         }
-        //as event fires even when player looks around, we'll cancel if they don't actually move
-        if(event.getFrom().getBlockX() == event.getTo().getBlockX() && event.getFrom().getBlockZ() == event.getTo().getBlockZ() && event.getFrom().getBlockY() == event.getTo().getBlockY()){
-            return;
-        }
-        //if not yet cancelled we can start instantiating shit, I hope. Main concern is once server is heavily populated this event will be called A LOT. Need to keep it minimal.
-        //returning as soon as we realise we needn't compute any further.
+
         Player player = event.getPlayer();
-        Location to = event.getTo();
-        if(!playersInLandmarks.isEmpty() && isPlayerInLandmark(player)){
-            Landmark landmark = getCurrentLandmark(player);
-            if (!landmark.getRegion().contains(to.getBlockX(),to.getBlockY(),to.getBlockZ())){
-                player.sendMessage("you have exited a landmark");
-                TitleUtility.sendPlayer("You have exited " + landmark.getTitle(), "Substring", 5, 20,5, player);
-                playersInLandmarks.remove(player.getUniqueId());
-            }
+
+        // Ignore NPCs if Citizens is present.
+        if (Bukkit.getPluginManager().isPluginEnabled("Citizens") && CitizensAPI.getNPCRegistry().isNPC(player)) {
             return;
         }
-        //we can look into caching these values to reduce compute requirements of this block.
-        Location from = event.getFrom();
-        //we're now going to take their location data and check if any of the regions in our landmark manager contain either their to or from positions.
-        //If they do then we know a player is exiting or entering a landmark region.
-        Iterator landmarkIterator = landmarkList.iterator();
-        while(landmarkIterator.hasNext()){
-            Landmark landmark = (Landmark)landmarkIterator.next();
-            if(landmark.getRegion().contains(to.getBlockX(),to.getBlockY(),to.getBlockZ())){
-                if(!hasDiscovered(player, landmark.getID())){
-                    discoverLandmark(player,landmark);
+
+        Location to = event.getTo();
+
+        Landmark current = playersInLandmarks.get(player.getUniqueId());
+        if (current != null) {
+            if (!isInside(current, to)) {
+                TitleUtility.sendPlayer("You have exited " + current.getTitle(), "", 5, 20, 5, player);
+                playersInLandmarks.remove(player.getUniqueId());
+            } else {
+                return;
+            }
+        }
+
+        for (Landmark landmark : landmarkList) {
+            if (!player.getWorld().getName().equalsIgnoreCase(landmark.getWorldName())) {
+                continue;
+            }
+
+            if (landmark.isDiscoveredAt(to.getBlockX(), to.getBlockY(), to.getBlockZ())) {
+                if (!hasDiscovered(player, landmark.getID())) {
+                    discoverLandmark(player, landmark);
                 }
-                player.sendMessage("You have entered a landmark");
-                playersInLandmarks.put(player.getUniqueId(),landmark);
-
+                playersInLandmarks.put(player.getUniqueId(), landmark);
+                break;
+            }
         }
-        }
     }
 
-    public boolean isPlayerInLandmark (Player player){
-        return playersInLandmarks.containsKey(player.getUniqueId());
+    private boolean isInside(Landmark landmark, Location loc) {
+        return landmark.getRegion().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
     }
-    public Landmark getCurrentLandmark (Player player){
-        return playersInLandmarks.get(player.getUniqueId());
-    }
-    public void discoverLandmark(Player player, Landmark landmark){
+
+    public void discoverLandmark(Player player, Landmark landmark) {
         List<String> landmarksPlayer = landmarksDiscovered.getOrDefault(player.getUniqueId(), new ArrayList<>());
-        if(!landmarksPlayer.contains(landmark.getID())){
+        if (!landmarksPlayer.contains(landmark.getID())) {
             landmarksPlayer.add(landmark.getID());
-            landmarksDiscovered.put(player.getUniqueId(),landmarksPlayer);
-            player.sendMessage("You have discovered " + landmark.getTitle());
+            landmarksDiscovered.put(player.getUniqueId(), landmarksPlayer);
+            TitleUtility.sendPlayer("Landmark Discovered", landmark.getTitle(), 10, 40, 10, player);
+            if (!landmark.getAnnouncement().isBlank()) {
+                player.sendMessage(landmark.getAnnouncement());
+            }
         }
-
     }
 
-    public boolean hasDiscovered(Player player, String landmarkID){
-        return landmarksDiscovered.get(player.getUniqueId()).contains(landmarkID);
+    public boolean hasDiscovered(Player player, String landmarkID) {
+        List<String> discovered = landmarksDiscovered.get(player.getUniqueId());
+        return discovered != null && discovered.contains(landmarkID);
     }
 }

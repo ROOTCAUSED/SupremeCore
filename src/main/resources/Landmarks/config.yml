@@ -2,7 +2,8 @@ Landmarks:
   DeepFallows:
     region_ID: "test"
     World: "Survival"
-    Announcement: "A cold air bellows out from inside"
-    Type: "Cave"
+    Announcement: "&7A cold air bellows out from inside..."
+    Type: "CAVE"
     Name: "DeepFallows"
     landmarkID: "000012"
+    DiscoveryRadius: 18

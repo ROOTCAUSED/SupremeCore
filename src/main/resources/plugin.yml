@@ -31,6 +31,9 @@ permissions:
   tomes.remove:
     description: remove configured tomes
     default: op
+  landmarks.list:
+    description: list and view discovered landmarks
+    default: true
 commands:
   HorseInfo:
     description: Your description
