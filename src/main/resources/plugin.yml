@@ -25,6 +25,12 @@ permissions:
   tomes.add:
     description: add/configure tomes
     default: op
+  tomes.list:
+    description: list configured tomes
+    default: op
+  tomes.remove:
+    description: remove configured tomes
+    default: op
 commands:
   HorseInfo:
     description: Your description

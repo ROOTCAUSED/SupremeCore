@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class TomesCommand implements CommandExecutor {
 
@@ -26,10 +28,12 @@ public class TomesCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            player.sendMessage("/tomes retrieve");
-            player.sendMessage("/tomes add [key]");
+            sendHelp(player);
             return true;
         }
+
+        File configFile = new File("plugins/SupremeCore/Tomes/config.yml");
+        FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
 
         if (args.length == 1 && args[0].equalsIgnoreCase("retrieve")) {
             if (!player.hasPermission("tomes.retrieve")) {
@@ -42,6 +46,23 @@ public class TomesCommand implements CommandExecutor {
             }
 
             player.sendMessage("Retrieved " + TomeManager.tomes.size() + " tome(s).");
+            return true;
+        }
+
+        if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
+            if (!player.hasPermission("tomes.list")) {
+                player.sendMessage("You do not have permission to use this command.");
+                return true;
+            }
+
+            ConfigurationSection tomesSection = config.getConfigurationSection("Tomes");
+            if (tomesSection == null || tomesSection.getKeys(false).isEmpty()) {
+                player.sendMessage("No tomes configured.");
+                return true;
+            }
+
+            Set<String> keys = tomesSection.getKeys(false);
+            player.sendMessage("Configured tomes (" + keys.size() + "): " + String.join(", ", keys));
             return true;
         }
 
@@ -76,9 +97,6 @@ public class TomesCommand implements CommandExecutor {
                     ? new ArrayList<>(meta.getLore())
                     : new ArrayList<>(List.of("&7Imported tome", "&e[Common]"));
 
-            File configFile = new File("plugins/SupremeCore/Tomes/config.yml");
-            FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-
             if (!config.contains("Tomes")) {
                 config.createSection("Tomes");
             }
@@ -107,9 +125,41 @@ public class TomesCommand implements CommandExecutor {
             return true;
         }
 
-        player.sendMessage("Usage: /tomes retrieve");
-        player.sendMessage("Usage: /tomes add [key]");
+        if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
+            if (!player.hasPermission("tomes.remove")) {
+                player.sendMessage("You do not have permission to use this command.");
+                return true;
+            }
+
+            String key = sanitizeKey(args[1]);
+            String basePath = "Tomes." + key;
+            if (!config.contains(basePath)) {
+                player.sendMessage("No tome found with key '" + key + "'.");
+                return true;
+            }
+
+            config.set(basePath, null);
+            try {
+                config.save(configFile);
+            } catch (IOException e) {
+                player.sendMessage("Failed to remove tome: " + e.getMessage());
+                return true;
+            }
+
+            TomeManager.enable();
+            player.sendMessage("Removed tome with key '" + key + "' and reloaded TomeManager.");
+            return true;
+        }
+
+        sendHelp(player);
         return true;
+    }
+
+    private void sendHelp(Player player) {
+        player.sendMessage("/tomes retrieve");
+        player.sendMessage("/tomes list");
+        player.sendMessage("/tomes add [key]");
+        player.sendMessage("/tomes remove <key>");
     }
 
     private String sanitizeKey(String input) {
