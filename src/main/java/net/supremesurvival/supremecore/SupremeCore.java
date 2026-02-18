@@ -17,6 +17,7 @@ import net.supremesurvival.supremecore.tomes.TomesCommand;
 import net.supremesurvival.supremecore.mobUtils.HorseInfo;
 import net.supremesurvival.supremecore.sanguine.Vampire;
 import net.supremesurvival.supremecore.realestate.RealEstateCommand;
+import net.supremesurvival.supremecore.loot.LootManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
@@ -31,6 +32,7 @@ public final class SupremeCore extends JavaPlugin implements Listener {
     IntervalAnnouncer intervalAnnouncer = new IntervalAnnouncer(this);
     FileHandler fileHandler = new FileHandler(this);
     Vampire vampire = new Vampire(this);
+    LootManager lootManager = new LootManager(this);
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -46,6 +48,8 @@ public final class SupremeCore extends JavaPlugin implements Listener {
         Logger.sendMessage((ChatColor.YELLOW + "[SupremeCore] [+] " + ChatColor.GRAY + "SupremeCore loaded - Shit just got real."), Logger.LogType.INFO, "SupremeCore");
         this.getServer().getPluginManager().registerEvents(new MobLoot(), this);
         Logger.sendMessage((ChatColor.YELLOW + "[SupremeCore] [+] " + ChatColor.GRAY + "SupremeNerf Gold Filter Loaded."), Logger.LogType.INFO, "SupremeCore");
+        lootManager.enable();
+        this.getServer().getPluginManager().registerEvents(lootManager, this);
         this.getCommand("HorseInfo").setExecutor(new HorseInfo());
         this.getCommand("Landmarks").setExecutor(new LandmarkCommand());
         this.getCommand("Vampire").setExecutor(vampire);
