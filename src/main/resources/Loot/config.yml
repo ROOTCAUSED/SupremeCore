@@ -1,0 +1,12 @@
+injection:
+  # Chance (0.0 - 1.0) to inject one random tome per roll.
+  tome-chance: 0.12
+
+  # Chance (0.0 - 1.0) to inject one random artefact per roll.
+  artefact-chance: 0.04
+
+  # How many roll attempts happen on first valid open.
+  max-rolls: 1
+
+  # If true, only chests with a loot table (generated world chests) are targeted.
+  require-loot-table: true
